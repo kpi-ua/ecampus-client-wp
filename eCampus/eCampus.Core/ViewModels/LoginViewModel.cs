@@ -14,8 +14,16 @@ using System.Windows.Media.Imaging;
 
 namespace eCampus.Core.ViewModels
 {
+    public delegate void AuthenticationEventHandler();
     public class LoginViewModel : INotifyPropertyChanged
     {
+        public event AuthenticationEventHandler AuthenticationCompleted;
+
+        public event AuthenticationEventHandler AuthenticationStarted;
+
+        public event AuthenticationEventHandler AuthenticationFailed;
+
+
         /// <summary>
         /// Поле команды для обработки события нажатия клавиши "Увiйти"
         /// </summary>
@@ -66,28 +74,15 @@ namespace eCampus.Core.ViewModels
         {
             try
             {
-                string x = await DownloadString(new Uri("http://api.ecampus.kpi.ua/User/Auth?login=" + this.Login + "&password=" + this.Password));
-                JToken token = JObject.Parse(x);
-                string SessionID = (string)token.SelectToken("Data");
-                x = await DownloadString(new Uri("http://api.ecampus.kpi.ua/User/GetPermissions?sessionId=" + SessionID));
-                token = JObject.Parse(x);
-                JToken Permissions = token.SelectToken("Data");
-                string data = string.Empty;
-                foreach (var item in Permissions)
+                if (AuthenticationStarted!=null)
                 {
-                    data += "SubsystemName: ";
-                    data += (string)item.SelectToken("SubsystemName");
-                    data += "\nIsCreate: ";
-                    data += (string)item.SelectToken("IsCreate");
-                    data += "\nIsRead: ";
-                    data += (string)item.SelectToken("IsRead");
-                    data += "\nIsUpdate: ";
-                    data += (string)item.SelectToken("IsUpdate");
-                    data += "\nIsDelete: ";
-                    data += (string)item.SelectToken("IsDelete");
-                    data += "\n\n";
+                    AuthenticationStarted();
                 }
-                MessageBox.Show(data);
+                AuthResult ar = await CampusAPI.Auth(this.Login, this.Password);
+                if (AuthenticationCompleted!=null)
+                {
+                    AuthenticationCompleted();
+                }
             }
             catch (WebException)
             {
@@ -98,6 +93,10 @@ namespace eCampus.Core.ViewModels
                 else
                 {
                     MessageBox.Show("Відсутній доступ до мережі Інтернет");
+                }
+                if (AuthenticationFailed!=null)
+                {
+                    AuthenticationFailed();
                 }
             }
             catch (Exception ex)
@@ -124,22 +123,7 @@ namespace eCampus.Core.ViewModels
         }
 
 
-        public static Task<string> DownloadString(Uri url)
-        {
-            var tcs = new TaskCompletionSource<string>();
-            var wc = new WebClient();
-            wc.DownloadStringCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                    tcs.TrySetException(e.Error);
-                else if (e.Cancelled)
-                    tcs.TrySetCanceled();
-                else
-                    tcs.TrySetResult(e.Result);
-            };
-            wc.DownloadStringAsync(url);
-            return tcs.Task;
-        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string propertyName)

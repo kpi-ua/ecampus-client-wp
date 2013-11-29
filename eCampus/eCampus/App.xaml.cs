@@ -8,13 +8,14 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using eCampus.Resources;
 using eCampus.Core.ViewModels;
+using System.Threading.Tasks;
 
 namespace eCampus
 {
     public partial class App : Application
     {
         private static LoginViewModel loginViewModel = null;
-        public static LoginViewModel LogimVM
+        public static LoginViewModel LoginVM
         {
             get
             {
@@ -23,7 +24,23 @@ namespace eCampus
                 return loginViewModel;
             }
         }
-
+        private static MyProfileViewModel myProfileViewModel = null;
+        public static MyProfileViewModel MyProfileVM
+        {
+            get
+            {
+                return myProfileViewModel;
+            }
+        }
+        async public static Task<MyProfileViewModel> GetMyProfileVM()
+        {
+            //get
+            //{
+                if (myProfileViewModel == null)
+                    myProfileViewModel = await MyProfileViewModel.BuildViewModelAsync();
+                return myProfileViewModel;
+            //}
+        }
 
 
         /// <summary>
@@ -54,6 +71,9 @@ namespace eCampus
             {
                 // Отображение текущих счетчиков частоты смены кадров.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;
+
+                // Display the metro grid helper.
+                MetroGridHelper.IsVisible = true;
 
                 // Отображение областей приложения, перерисовываемых в каждом кадре.
                 //Application.Current.Host.Settings.EnableRedrawRegions = true;

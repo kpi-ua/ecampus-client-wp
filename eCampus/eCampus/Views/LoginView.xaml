@@ -32,7 +32,7 @@
             </TextBlock>
         </StackPanel>
 
-        <StackPanel VerticalAlignment="Center" x:Name="ContentPanel" Grid.Row="1"  Margin="0,0,0,0">
+        <StackPanel VerticalAlignment="Center" x:Name="ContentPanel" Grid.Row="1"  Margin="12,0">
             <StackPanel Margin="12,0,12,0" Orientation="Horizontal">
                 <Rectangle Width="10" Margin="0,0,6,0">
                     <Rectangle.Fill>
@@ -41,7 +41,7 @@
                 </Rectangle>
                 <TextBlock TextWrapping="NoWrap">Логін:</TextBlock>
             </StackPanel>
-            <toolkit:PhoneTextBox x:Name="loginBox" Text="" InputScope="LogOnName" />
+            <toolkit:PhoneTextBox x:Name="loginBox" Text="123" InputScope="LogOnName" />
             
             <StackPanel Margin="12,0,12,0" Orientation="Horizontal">
                 <Rectangle Width="10" Margin="0,0,6,0">
@@ -51,10 +51,10 @@
                 </Rectangle>
                 <TextBlock TextWrapping="NoWrap">Пароль:</TextBlock>
             </StackPanel>
-            <PasswordBox Password="" x:Name="passwordBox" />
+            <PasswordBox Password="123" x:Name="passwordBox" />
         </StackPanel>
 
-        <Button Grid.Row="2" Command="{Binding LoginCommand}" Click="Button_Click">Увійти</Button>
+        <Button Grid.Row="2" Margin="12,0" Command="{Binding LoginCommand}" Click="Button_Click">Увійти</Button>
     </Grid>
 
 </phone:PhoneApplicationPage>
