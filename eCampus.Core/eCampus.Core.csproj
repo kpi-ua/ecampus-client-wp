@@ -89,7 +89,6 @@
     <Compile Include="Converters\BoolToStudentStatus.cs" />
     <Compile Include="Converters\UserListToConversationTitleConverter.cs" />
     <Compile Include="Converters\VisibilityOccupationConverter.cs" />
-    <Compile Include="Helpers\OtherHelpers.cs" />
     <Compile Include="Helpers\WebHelpers.cs" />
     <Compile Include="Helpers\CampusAPI.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />

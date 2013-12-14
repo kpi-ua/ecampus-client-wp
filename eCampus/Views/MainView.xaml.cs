@@ -4,6 +4,8 @@ using eCampus.Core.Helpers;
 using eCampus.Core.Models;
 using Newtonsoft.Json;
 using Coding4Fun.Toolkit.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace eCampus.Views
 {
