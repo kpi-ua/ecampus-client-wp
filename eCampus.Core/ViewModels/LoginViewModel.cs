@@ -19,6 +19,7 @@ namespace eCampus.Core.ViewModels
 
         public event AuthenticationEventHandler AuthenticationFailed;
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Поле команды для обработки события нажатия клавиши "Увiйти"
@@ -60,7 +61,7 @@ namespace eCampus.Core.ViewModels
                     AuthenticationStarted();
                 }
 
-                AuthResult ar = await CampusAPI.Auth(this.Login, this.Password);
+                var ar = await CampusAPI.Auth(this.Login, this.Password);
 
                 if (AuthenticationCompleted != null)
                 {
@@ -88,8 +89,7 @@ namespace eCampus.Core.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
-
-
+        
         /// <summary>
         /// Получение логотипа в зависимости от темы
         /// </summary>
@@ -105,11 +105,7 @@ namespace eCampus.Core.ViewModels
                 return _logoSource;
             }
         }
-
-
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;

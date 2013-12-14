@@ -7,17 +7,17 @@ namespace eCampus.Core.Helpers
 {
     public static class CampusAPI
     {
-        async public static Task<AuthResult> Auth(string login, string password)
+        async public static Task<Campus.SDK.Result> Auth(string login, string password)
         {
             string x = await WebHelpers.DownloadString(new Uri(Campus.SDK.Client.ApiEndpoint + "User/auth?login=" + login + "&password=" + password));
-            AuthResult ar = JsonConvert.DeserializeObject<AuthResult>(x);
-            IsolatedStorageHelpers.SaveToStore<AuthResult>(ar, "AuthResult");
+            var ar = JsonConvert.DeserializeObject<Campus.SDK.Result>(x);
+            IsolatedStorageHelpers.SaveToStore<Campus.SDK.Result>(ar, "AuthResult");
             return ar;
         }
 
         async public static Task<MyProfile> GetCurrentUser()
         {
-            AuthResult ar = IsolatedStorageHelpers.OpenFromStore<AuthResult>("AuthResult");
+            var ar = IsolatedStorageHelpers.OpenFromStore<Campus.SDK.Result>("AuthResult");
             string x = await eCampus.Core.Helpers.WebHelpers.DownloadString(new Uri(Campus.SDK.Client.ApiEndpoint + "user/GetCurrentUser?sessionId=" + ar.Data));
             return JsonConvert.DeserializeObject<MyProfile>(x);
         }

@@ -99,8 +99,9 @@
     <Compile Include="ViewModels\MyProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Campus.SDK">
-      <HintPath>..\packages\campus.sdk.0.1.5.5\lib\portable-net45+sl5+wp8+win8\Campus.SDK.dll</HintPath>
+    <Reference Include="Campus.SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\campus.sdk.0.1.6.6\lib\portable-net45+sl5+wp8+win8\Campus.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\wp8\Microsoft.Threading.Tasks.dll</HintPath>
