@@ -20,15 +20,18 @@ namespace eCampus.Views
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = App.LoginVM;
+
             App.LoginVM.AuthenticationCompleted += () => 
             {
                 NavigationService.Navigate(new Uri("/Views/MainView.xaml", UriKind.Relative));
                 progressIndicator.IsVisible = false;
             };
+
             App.LoginVM.AuthenticationStarted += () => 
             {
                 progressIndicator.IsVisible = true;
             };
+
             App.LoginVM.AuthenticationFailed += () =>
             {
                 progressIndicator.IsVisible = false;
