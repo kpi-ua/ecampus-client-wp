@@ -128,7 +128,6 @@ namespace eCampus.Core.ViewModels
 		{
 			get
 			{
-				
 				return currentUser;
 			}
 			set

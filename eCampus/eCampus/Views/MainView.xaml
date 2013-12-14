@@ -20,6 +20,7 @@
         <conv:BoolToStudentStatus x:Key="BoolToStudentStatus"></conv:BoolToStudentStatus>
         <conv:VisibilityOccupationConverter x:Key="VisibilityOccupationConverter"></conv:VisibilityOccupationConverter>
         <conv:BoolToStringConverter x:Key="BoolToStringConverter"></conv:BoolToStringConverter>
+        <conv:UserListToConversationTitleConverter x:Key="UserListToConversationTitleConverter"></conv:UserListToConversationTitleConverter>
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
@@ -39,16 +40,16 @@
         <Grid>
             <Image Height="40" HorizontalAlignment="Left" Margin="24,0,0,0" Source="/Assets/Images/логоwp_чернаятема.png"/>
         </Grid>
-        <phone:Panorama Margin="0,0,0,0" Grid.Row="1">
+        <phone:Pivot Margin="0,0,0,0" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
             <i:Interaction.Triggers>
-                <abu:SelectedPanoItemChangedTrigger>
-                    <abu:SelectedPanoItemChangedTrigger.SelectionMappings>
+                <abu:SelectedPivotItemChangedTrigger>
+                    <abu:SelectedPivotItemChangedTrigger.SelectionMappings>
                         <!--Map 1st and 2nd pivot item to 1st app bar-->
                         <abu:SelectionMapping SourceIndex="0" TargetIndex="0"/>
                         <abu:SelectionMapping SourceIndex="1" TargetIndex="1"/>
                         <abu:SelectionMapping SourceIndex="2" TargetIndex="2"/>
                         <abu:SelectionMapping SourceIndex="3" TargetIndex="0"/>
-                    </abu:SelectedPanoItemChangedTrigger.SelectionMappings>
+                    </abu:SelectedPivotItemChangedTrigger.SelectionMappings>
                     <abu:SwitchAppBarAction>
                         <abu:AppBar Id="0" Mode="Minimized">
                             <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png"
@@ -67,14 +68,14 @@
                     Text="нове оголошення" Command="{Binding SampleCommand}"/>
                         </abu:AppBar>
                     </abu:SwitchAppBarAction>
-                </abu:SelectedPanoItemChangedTrigger>
+                </abu:SelectedPivotItemChangedTrigger>
             </i:Interaction.Triggers>
-            <phone:PanoramaItem x:Name="myProfilePivotItem">
-                <phone:PanoramaItem.Header>
-                    <TextBlock FontSize="55">
+            <phone:PivotItem x:Name="myProfilePivotItem">
+                <phone:PivotItem.Header>
+                    <TextBlock FontSize="65">
                         мій профіль
                     </TextBlock>
-                </phone:PanoramaItem.Header>
+                </phone:PivotItem.Header>
                 <ScrollViewer Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="12,0,-12,0" x:Name="profilePanel" Visibility="Collapsed">
                         <Image MaxWidth="150" HorizontalAlignment="Left" Source="{Binding Image}"/>
@@ -300,30 +301,66 @@
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
-            </phone:PanoramaItem>
-            <phone:PanoramaItem>
-                <phone:PanoramaItem.Header>
-                    <TextBlock FontSize="55">
+            </phone:PivotItem>
+            <phone:PivotItem x:Name="messagePivotItem">
+                <phone:PivotItem.Header>
+                    <TextBlock FontSize="65">
                             повідомлення
                     </TextBlock>
-                </phone:PanoramaItem.Header>
-            </phone:PanoramaItem>
-            <phone:PanoramaItem>
-                <phone:PanoramaItem.Header>
-                    <TextBlock FontSize="55">
+                </phone:PivotItem.Header>
+                <phone:PivotItem.Content>
+                    <Grid>
+                        <phone:LongListSelector Margin="12,0" ItemsSource="{Binding Conversations}">
+                            <phone:LongListSelector.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,6" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0" Background="Gray" Opacity="0.5" Width="110" Height="110">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[1].Photo}"></Image>
+                                                <Image Grid.Column="1" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[2].Photo}"></Image>
+                                                <Image Grid.Column="2" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[3].Photo}"></Image>
+                                            </Grid> 
+                                        </Grid>
+                                        <Grid Grid.Column="1" Margin="6,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Text="{Binding Users, Converter={StaticResource UserListToConversationTitleConverter}}" FontFamily="Segoe WP Light" FontSize="38"></TextBlock>
+                                            <TextBlock Grid.Row="1" Text="{Binding LastMessageText}"></TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
+                    </Grid>
+                </phone:PivotItem.Content>
+            </phone:PivotItem>
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock FontSize="65">
                         оголошення
                     </TextBlock>
-                </phone:PanoramaItem.Header>
-            </phone:PanoramaItem>
-            <phone:PanoramaItem>
-                <phone:PanoramaItem.Header>
-                    <TextBlock FontSize="55">
+                </phone:PivotItem.Header>
+            </phone:PivotItem>
+            <phone:PivotItem>
+                <phone:PivotItem.Header>
+                    <TextBlock FontSize="65">
                         статистика
                     </TextBlock>
-                </phone:PanoramaItem.Header>
-            </phone:PanoramaItem>
+                </phone:PivotItem.Header>
+            </phone:PivotItem>
 
-        </phone:Panorama>
+        </phone:Pivot>
     </Grid>
 
 </phone:PhoneApplicationPage>

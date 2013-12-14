@@ -21,5 +21,11 @@ namespace eCampus.Core.Helpers
             string x = await eCampus.Core.Helpers.WebHelpers.DownloadString(new Uri(Campus.SDK.Client.ApiEndpoint + "user/GetCurrentUser?sessionId=" + ar.Data));
             return JsonConvert.DeserializeObject<MyProfile>(x);
         }
+		async public static Task<UserConversations> GetUserConversations()
+		{
+			AuthResult ar = IsolatedStorageHelpers.OpenFromStore<AuthResult>("AuthResult");
+			string x = await eCampus.Core.Helpers.WebHelpers.DownloadString(new Uri(Campus.SDK.Client.ApiEndpoint + "message/GetUserConversations?sessionId=" + ar.Data));
+			return JsonConvert.DeserializeObject<UserConversations>(x);
+		}
     }
 }

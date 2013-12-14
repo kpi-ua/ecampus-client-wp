@@ -36,7 +36,16 @@ namespace eCampus
             }
         }
 
-
+		private static MessageViewModel messageViewModel = null;
+		public static MessageViewModel MessageVM
+		{
+			get
+			{
+				if (messageViewModel == null)
+					messageViewModel = new MessageViewModel();
+				return messageViewModel;
+			}
+		}
         /// <summary>
         /// Обеспечивает быстрый доступ к корневому кадру приложения телефона.
         /// </summary>
@@ -247,5 +256,6 @@ namespace eCampus
                 throw;
             }
         }
-    }
+
+	}
 }
