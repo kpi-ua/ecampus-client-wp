@@ -1,12 +1,7 @@
 ﻿using eCampus.Core.Helpers;
 using eCampus.Core.Models;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCampus.Core.ViewModels
 {
@@ -15,7 +10,11 @@ namespace eCampus.Core.ViewModels
 	{
 		public event MyProfileDownloadEventHandler MyProfileDownloadStarted;
 		public event MyProfileDownloadEventHandler MyProfileDownloadCompleted;
-		public static event MyProfileDownloadEventHandler MyProfileDownloadFailed;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+        public static event MyProfileDownloadEventHandler MyProfileDownloadFailed;
+        
+        private MyProfile currentUser;
 
 		public MyProfileViewModel()
 		{
@@ -43,10 +42,10 @@ namespace eCampus.Core.ViewModels
                 {
                     return this.currentUser.Data.Profiles; 
                 }
+
 				return null;
             }
         }
-
 
         public List<Employee> Employees 
         { 
@@ -122,8 +121,7 @@ namespace eCampus.Core.ViewModels
 				return string.Empty;
 			}
 		}
-
-		private MyProfile currentUser;
+        
 		public MyProfile CurrentUser
 		{
 			get
@@ -148,8 +146,6 @@ namespace eCampus.Core.ViewModels
 			}
 		}
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;

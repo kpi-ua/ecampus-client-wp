@@ -1,5 +1,4 @@
 ﻿using eCampus.Core.Helpers;
-using eCampus.Core.Models;
 using Microsoft.Phone.Net.NetworkInformation;
 using System;
 using System.ComponentModel;

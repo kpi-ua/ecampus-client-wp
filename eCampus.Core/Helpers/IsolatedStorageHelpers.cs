@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO.IsolatedStorage;
-using System.IO;
+﻿using System.IO.IsolatedStorage;
 
 namespace eCampus.Core.Helpers
 {
@@ -12,7 +6,8 @@ namespace eCampus.Core.Helpers
     {
         public static void SaveToStore<T>(T value, string name)
         {
-            IsolatedStorageSettings store = IsolatedStorageSettings.ApplicationSettings;
+            var store = IsolatedStorageSettings.ApplicationSettings;
+
             if (!store.Contains(name))
             {
                 store.Add(name, value);
@@ -22,18 +17,17 @@ namespace eCampus.Core.Helpers
                 store[name] = value;
             }
         }
+
         public static T OpenFromStore<T>(string name) where T : class, new()
         {
-            IsolatedStorageSettings store = IsolatedStorageSettings.ApplicationSettings;
+            var store = IsolatedStorageSettings.ApplicationSettings;
+
             if (!store.Contains(name))
             {
                 return new T();
             }
-            else
-            {
-                return (T)store[name];
-            }
+            
+            return (T)store[name];
         }
-
     }
 }

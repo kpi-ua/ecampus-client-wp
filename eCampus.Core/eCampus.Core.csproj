@@ -91,7 +91,6 @@
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\IsolatedStorageHelpers.cs" />
     <Compile Include="MetroGridHelper.cs" />
-    <Compile Include="Models\AuthResult.cs" />
     <Compile Include="Models\MyProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

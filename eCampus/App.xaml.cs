@@ -1,42 +1,46 @@
-﻿using System;
+﻿using eCampus.Core.ViewModels;
+using eCampus.Resources;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using System;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using eCampus.Resources;
-using eCampus.Core.ViewModels;
-using System.Threading.Tasks;
 
 namespace eCampus
 {
     public partial class App : Application
     {
         private static LoginViewModel loginViewModel = null;
+        private static MyProfileViewModel myProfileViewModel = null;
+
         public static LoginViewModel LoginVM
         {
             get
             {
                 if (loginViewModel == null)
+                {
                     loginViewModel = new LoginViewModel();
+                }
+
                 return loginViewModel;
             }
         }
-        private static MyProfileViewModel myProfileViewModel = null;
         
         public static MyProfileViewModel MyProfileVM
         {
             get
             {
                 if (myProfileViewModel == null)
+                {
                     myProfileViewModel = new MyProfileViewModel();
+                }
+
                 return myProfileViewModel;
             }
         }
-
-
+        
         /// <summary>
         /// Обеспечивает быстрый доступ к корневому кадру приложения телефона.
         /// </summary>

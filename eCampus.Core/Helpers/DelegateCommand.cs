@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace eCampus.Core.Helpers
 {
     public class DelegateCommand : ICommand
     {
-        Func<object, bool> canExecute;
-        Action<object> executeAction;
+        private readonly Func<object, bool> canExecute;
+        private readonly Action<object> executeAction;
+
+        public event EventHandler CanExecuteChanged;
 
         public DelegateCommand(Action<object> executeAction)
             : this(executeAction, null)
@@ -38,8 +36,6 @@ namespace eCampus.Core.Helpers
 
             return result;
         }
-
-        public event EventHandler CanExecuteChanged;
 
         public void RaiseCanExecuteChanged()
         {

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
@@ -16,21 +12,13 @@ namespace eCampus.Core.Converters
             {
                 return Visibility.Collapsed;
             }
-            else
-            {
-                return Visibility.Visible;
-            }
+            
+            return Visibility.Visible;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo language)
         {
-            if ((Visibility)value == Visibility.Collapsed)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
+            return (Visibility)value == Visibility.Collapsed ? 0 : 1;
         }
     }
 }
