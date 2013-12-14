@@ -20,12 +20,22 @@ namespace eCampus.Views
         {
             InitializeComponent();
             progressIndicator = new ProgressIndicator() { IsVisible = false, IsIndeterminate = true, Text = "" };
+			App.MyProfileVM.MyProfileDownloadStarted += () => 
+			{ 
+				progressIndicator.Text = "Завантаження..."; 
+				progressIndicator.IsVisible = true; 
+			};
+			App.MyProfileVM.MyProfileDownloadCompleted += () => 
+			{
+				progressIndicator.IsVisible = false; 
+			};
             SystemTray.SetProgressIndicator(this, progressIndicator);
         }
 
-        async private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            myProfilePivotItem.DataContext = await App.GetMyProfileVM();
+			myProfilePivotItem.DataContext = App.MyProfileVM;
+			//App.MyProfileVM.Load();
             profilePanel.Visibility = System.Windows.Visibility.Visible;
         }
     }

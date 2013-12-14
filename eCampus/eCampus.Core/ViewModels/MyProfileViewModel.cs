@@ -10,42 +10,40 @@ using System.Threading.Tasks;
 
 namespace eCampus.Core.ViewModels
 {
+	public delegate void MyProfileDownloadEventHandler();
     public class MyProfileViewModel : INotifyPropertyChanged
-    {
-        async public static Task<MyProfileViewModel> BuildViewModelAsync()
-        {
-            MyProfile tmpData = new MyProfile();
-            try
-            {
-                tmpData = await CampusAPI.GetCurrentUser();
-            }
-            catch (Exception)
-            {
-                
-            }
-            return new MyProfileViewModel(tmpData);
-        }
+	{
+		public event MyProfileDownloadEventHandler MyProfileDownloadStarted;
+		public event MyProfileDownloadEventHandler MyProfileDownloadCompleted;
+		public static event MyProfileDownloadEventHandler MyProfileDownloadFailed;
 
-        private MyProfileViewModel(MyProfile tmpData)
-        {
-            this.profile = tmpData;
-        }
+		public MyProfileViewModel()
+		{
+			Load();
+		}
 
-
-        
+		async public void Load()
+		{
+			if (MyProfileDownloadStarted!=null)
+			{
+				MyProfileDownloadStarted();
+			}
+			this.CurrentUser = await CampusAPI.GetCurrentUser();
+			if (MyProfileDownloadCompleted != null)
+			{
+				MyProfileDownloadCompleted();
+			}
+		}
 
         public List<Profile> Profiles
         {
             get 
             {
-                if (this.profile!=null)
+                if (this.currentUser!=null)
                 {
-                    return this.profile.Data.Profiles; 
+                    return this.currentUser.Data.Profiles; 
                 }
-                else
-                {
-                    return null;
-                }
+				return null;
             }
         }
 
@@ -54,14 +52,11 @@ namespace eCampus.Core.ViewModels
         { 
             get
             {
-                if (this.profile != null)
+                if (this.currentUser != null)
                 {
-                    return this.profile.Data.Employees;
+                    return this.currentUser.Data.Employees;
                 }
-                else
-                {
-                    return null;
-                }
+				return null;
             }
         }
 
@@ -69,14 +64,11 @@ namespace eCampus.Core.ViewModels
         {
             get
             {
-                if (this.profile != null)
+                if (this.currentUser != null)
                 {
-                    return this.profile.Data.Employees.Count;
-                }
-                else
-                {
-                    return 0;
-                }
+                    return this.currentUser.Data.Employees.Count;
+				} 
+				return 0;
             }
         }
 
@@ -84,14 +76,11 @@ namespace eCampus.Core.ViewModels
         {
             get
             {
-                if (this.profile != null)
+                if (this.currentUser != null)
                 {
-                    return this.profile.Data.Personalities;
+                    return this.currentUser.Data.Personalities;
                 }
-                else
-                {
-                    return null;
-                }
+				return null;
             }
         }
 
@@ -99,14 +88,11 @@ namespace eCampus.Core.ViewModels
         {
             get
             {
-                if (this.profile != null)
+                if (this.currentUser != null)
                 {
-                    return this.profile.Data.Personalities.Count;
+                    return this.currentUser.Data.Personalities.Count;
                 }
-                else
-                {
-                    return 0;
-                }
+				return 0;
             }
         }
 
@@ -114,24 +100,9 @@ namespace eCampus.Core.ViewModels
         { 
             get 
             {
-                if (this.profile != null)
+                if (this.currentUser != null)
                 {
-                    return this.profile.Data.Photo;
-                }
-                else
-                {
-                    return "";
-                }
-            } 
-        }
-
-        public string FullName
-        {
-            get
-            {
-                if (this.profile != null)
-                {
-                    return this.profile.Data.FullName;
+                    return this.currentUser.Data.Photo;
                 }
                 else
                 {
@@ -140,11 +111,42 @@ namespace eCampus.Core.ViewModels
             }
         }
 
-        private MyProfile profile;
-        public MyProfile Profile
-        {
-            get { return profile; }
-        }
+		public string FullName
+		{
+			get
+			{
+				if (this.currentUser != null)
+				{
+					return this.CurrentUser.Data.FullName;
+				}
+				return string.Empty;
+			}
+		}
+
+		private MyProfile currentUser;
+		public MyProfile CurrentUser
+		{
+			get
+			{
+				
+				return currentUser;
+			}
+			set
+			{
+				if (this.currentUser != value)
+				{
+					this.currentUser = value;
+					this.RaisePropertyChanged("CurrentUser");
+					this.RaisePropertyChanged("FullName");
+					this.RaisePropertyChanged("Image");
+					this.RaisePropertyChanged("PersonalitiesPlaceCount");
+					this.RaisePropertyChanged("Personalities");
+					this.RaisePropertyChanged("EmployeesPlaceCount");
+					this.RaisePropertyChanged("Employees");
+					this.RaisePropertyChanged("Profiles");
+				}
+			}
+		}
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -15,7 +15,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
-    
+
     <phone:PhoneApplicationPage.Resources>
         <conv:BoolToStudentStatus x:Key="BoolToStudentStatus"></conv:BoolToStudentStatus>
         <conv:VisibilityOccupationConverter x:Key="VisibilityOccupationConverter"></conv:VisibilityOccupationConverter>

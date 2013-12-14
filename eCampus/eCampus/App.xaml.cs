@@ -25,21 +25,15 @@ namespace eCampus
             }
         }
         private static MyProfileViewModel myProfileViewModel = null;
+        
         public static MyProfileViewModel MyProfileVM
         {
             get
             {
+                if (myProfileViewModel == null)
+                    myProfileViewModel = new MyProfileViewModel();
                 return myProfileViewModel;
             }
-        }
-        async public static Task<MyProfileViewModel> GetMyProfileVM()
-        {
-            //get
-            //{
-                if (myProfileViewModel == null)
-                    myProfileViewModel = await MyProfileViewModel.BuildViewModelAsync();
-                return myProfileViewModel;
-            //}
         }
 
 
