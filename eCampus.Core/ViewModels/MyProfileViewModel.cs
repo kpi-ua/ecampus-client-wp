@@ -27,7 +27,7 @@ namespace eCampus.Core.ViewModels
 			{
 				MyProfileDownloadStarted();
 			}
-			this.CurrentUser = await CampusAPI.GetCurrentUser();
+			this.CurrentUser = await CampusClient.GetCurrentUser();
 			if (MyProfileDownloadCompleted != null)
 			{
 				MyProfileDownloadCompleted();

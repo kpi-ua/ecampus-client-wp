@@ -1,21 +1,25 @@
-﻿using System;
+﻿using eCampus.Core.Helpers;
+using eCampus.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCampus.Core;
-using eCampus.Core.Models;
-using eCampus.Core.Helpers;
 
 namespace eCampus.Core.ViewModels
 {
 	public delegate void MyConversationsDownloadEventHandler();
+
 	public class MessageViewModel : INotifyPropertyChanged
 	{
+        public static event MyConversationsDownloadEventHandler MyConversationsDownloadFailed;
+
 		public event MyConversationsDownloadEventHandler MyConversationsDownloadStarted;
 		public event MyConversationsDownloadEventHandler MyConversationsDownloadCompleted;
-		public static event MyConversationsDownloadEventHandler MyConversationsDownloadFailed;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private UserConversations myConversation;
+
+        public bool isLoaded { get; set; }
+
 		public MessageViewModel()
 		{
 			try
@@ -42,11 +46,9 @@ namespace eCampus.Core.ViewModels
 		async private void Load()
 		{
 			isLoaded = false;
-			this.MyConversation = await CampusAPI.GetUserConversations();
+			this.MyConversation = await CampusClient.GetUserConversations();
 			isLoaded = true;
 		}
-
-		public bool isLoaded { get; set; }
 
 		public List<Conversation> Conversations
 		{
@@ -68,7 +70,6 @@ namespace eCampus.Core.ViewModels
 			}
 		}
 
-		private UserConversations myConversation;
 		public UserConversations MyConversation
 		{
 			get
@@ -85,10 +86,11 @@ namespace eCampus.Core.ViewModels
 				}
 			}
 		}
-		public event PropertyChangedEventHandler PropertyChanged;
+        
 		private void RaisePropertyChanged(string propertyName)
 		{
 			PropertyChangedEventHandler handler = this.PropertyChanged;
+
 			if (handler != null)
 			{
 				handler(this, new PropertyChangedEventArgs(propertyName));

@@ -6,6 +6,7 @@ namespace eCampus.Core.Models
     {
         public Data Data { get; set; }
     }
+
     public class Data
     {
         public int UserAccountId { get; set; }
@@ -16,6 +17,7 @@ namespace eCampus.Core.Models
         public List<Employee> Employees { get; set; }
         public List<Profile> Profiles { get; set; }
     }
+
     public class Profile
     {
         public string SubsystemName { get; set; }
@@ -24,6 +26,7 @@ namespace eCampus.Core.Models
         public bool IsUpdate { get; set; }
         public bool IsDelete { get; set; }
     }
+
     public class Employee
     {
         public int SubdivisionId { get; set; }
@@ -32,6 +35,7 @@ namespace eCampus.Core.Models
         public string AcademicDegree { get; set; }
         public string AcademicStatus { get; set; }
     }
+
     public class Personality
     {
         public int SubdivisionId { get; set; }

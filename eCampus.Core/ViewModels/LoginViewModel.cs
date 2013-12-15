@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 namespace eCampus.Core.ViewModels
 {
     public delegate void AuthenticationEventHandler();
+
     public class LoginViewModel : INotifyPropertyChanged
     {
         public event AuthenticationEventHandler AuthenticationCompleted;
@@ -60,7 +61,7 @@ namespace eCampus.Core.ViewModels
                     AuthenticationStarted();
                 }
 
-                var ar = await CampusAPI.Auth(this.Login, this.Password);
+                var ar = await CampusClient.Auth(this.Login, this.Password);
 
                 if (AuthenticationCompleted != null)
                 {
@@ -97,6 +98,7 @@ namespace eCampus.Core.ViewModels
             get
             {
                 Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
+                
                 if (darkBackgroundVisibility == Visibility.Visible)
                     _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\логоwp_чернаятема.png", UriKind.Relative) };
                 else
@@ -108,6 +110,7 @@ namespace eCampus.Core.ViewModels
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
+
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));

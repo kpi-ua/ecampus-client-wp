@@ -18,7 +18,8 @@ namespace eCampus.Core.Helpers
             }
         }
 
-        public static T OpenFromStore<T>(string name) where T : class, new()
+        public static T OpenFromStore<T>(string name)
+            where T : class, new()
         {
             var store = IsolatedStorageSettings.ApplicationSettings;
 
@@ -26,7 +27,7 @@ namespace eCampus.Core.Helpers
             {
                 return new T();
             }
-            
+
             return (T)store[name];
         }
     }

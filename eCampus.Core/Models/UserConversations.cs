@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Collections.Generic;
 
 namespace eCampus.Core.Models
 {
@@ -16,6 +8,7 @@ namespace eCampus.Core.Models
 		public string TimeStamp { get; set; }
 		public List<Conversation> Data { get; set; }
 	}
+
 	public class User
 	{
 		public int UserAccountId { get; set; }
@@ -31,6 +24,4 @@ namespace eCampus.Core.Models
 		public string LastMessageDate { get; set; }
 		public int GroupId { get; set; }
 	}
-
-
 }

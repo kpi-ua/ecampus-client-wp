@@ -90,7 +90,7 @@
     <Compile Include="Converters\UserListToConversationTitleConverter.cs" />
     <Compile Include="Converters\VisibilityOccupationConverter.cs" />
     <Compile Include="Helpers\WebHelpers.cs" />
-    <Compile Include="Helpers\CampusAPI.cs" />
+    <Compile Include="Helpers\CampusClient.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\IsolatedStorageHelpers.cs" />
     <Compile Include="MetroGridHelper.cs" />
