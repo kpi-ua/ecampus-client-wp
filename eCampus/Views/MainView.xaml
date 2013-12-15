@@ -19,6 +19,7 @@
     <phone:PhoneApplicationPage.Resources>
         <conv:BoolToStudentStatus x:Key="BoolToStudentStatus"></conv:BoolToStudentStatus>
         <conv:VisibilityOccupationConverter x:Key="VisibilityOccupationConverter"></conv:VisibilityOccupationConverter>
+        <conv:ConversationPhotoWidthConverter x:Key="ConversationPhotoWidthConverter"></conv:ConversationPhotoWidthConverter>
         <conv:BoolToStringConverter x:Key="BoolToStringConverter"></conv:BoolToStringConverter>
         <conv:UserListToConversationTitleConverter x:Key="UserListToConversationTitleConverter"></conv:UserListToConversationTitleConverter>
     </phone:PhoneApplicationPage.Resources>
@@ -321,14 +322,14 @@
                                         <Grid Grid.Column="0" Background="Gray" Opacity="0.5" Width="110" Height="110">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=1}"/>
+                                                    <ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=2}"/>
+                                                    <ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=3}"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Image Grid.Column="0" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[1].Photo}"></Image>
                                                 <Image Grid.Column="1" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[2].Photo}"></Image>
                                                 <Image Grid.Column="2" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[3].Photo}"></Image>
-                                            </Grid> 
+                                            </Grid>
                                         </Grid>
                                         <Grid Grid.Column="1" Margin="6,0,0,0">
                                             <Grid.RowDefinitions>

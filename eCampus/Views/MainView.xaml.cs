@@ -48,10 +48,7 @@ namespace eCampus.Views
 			}
 			else if (((Pivot)sender).SelectedIndex == 1)
 			{
-				//if (!App.MessageVM.isLoaded)
-				{
-					this.messagePivotItem.DataContext = App.MessageVM;
-				}
+				this.messagePivotItem.DataContext = App.MessageVM;
 			}
 			else if (((Pivot)sender).SelectedIndex == 2)
 			{

@@ -11,14 +11,11 @@ namespace eCampus.Core.ViewModels
 	public class MessageViewModel : INotifyPropertyChanged
 	{
         public static event MyConversationsDownloadEventHandler MyConversationsDownloadFailed;
-
 		public event MyConversationsDownloadEventHandler MyConversationsDownloadStarted;
 		public event MyConversationsDownloadEventHandler MyConversationsDownloadCompleted;
         public event PropertyChangedEventHandler PropertyChanged;
 
         private UserConversations myConversation;
-
-        public bool isLoaded { get; set; }
 
 		public MessageViewModel()
 		{
@@ -45,9 +42,7 @@ namespace eCampus.Core.ViewModels
 
 		async private void Load()
 		{
-			isLoaded = false;
 			this.MyConversation = await CampusClient.GetUserConversations();
-			isLoaded = true;
 		}
 
 		public List<Conversation> Conversations

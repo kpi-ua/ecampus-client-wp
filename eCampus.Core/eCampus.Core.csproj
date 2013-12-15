@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\BoolToStudentStatus.cs" />
+    <Compile Include="Converters\TestConverter.cs" />
     <Compile Include="Converters\UserListToConversationTitleConverter.cs" />
     <Compile Include="Converters\VisibilityOccupationConverter.cs" />
     <Compile Include="Helpers\WebHelpers.cs" />
