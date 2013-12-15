@@ -100,9 +100,9 @@ namespace eCampus.Core.ViewModels
                 Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
                 
                 if (darkBackgroundVisibility == Visibility.Visible)
-                    _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\логоwp_чернаятема.png", UriKind.Relative) };
+                    _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\logowhite.png", UriKind.Relative) };
                 else
-                    _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\логоwp_белаятема.png", UriKind.Relative) };
+                    _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\logoblack.png", UriKind.Relative) };
                 return _logoSource;
             }
         }

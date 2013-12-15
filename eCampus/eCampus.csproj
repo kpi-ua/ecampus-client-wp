@@ -137,6 +137,8 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Images\logoblack.png" />
+    <Content Include="Assets\Images\logowhite.png" />
     <Content Include="Assets\Images\логоwp_белаятема.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

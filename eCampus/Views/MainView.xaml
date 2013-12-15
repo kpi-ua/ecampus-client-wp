@@ -39,7 +39,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Image Height="40" HorizontalAlignment="Left" Margin="24,0,0,0" Source="/Assets/Images/логоwp_чернаятема.png"/>
+            <Image Height="40" HorizontalAlignment="Left" Margin="24,0,0,0" Source="/Assets/Images/logowhite.png"/>
         </Grid>
         <phone:Pivot Margin="0,0,0,0" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
             <i:Interaction.Triggers>
