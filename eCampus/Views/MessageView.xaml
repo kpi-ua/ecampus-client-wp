@@ -1,0 +1,79 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="eCampus.Views.MessageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="clr-namespace:eCampus.Core.Converters;assembly=eCampus.Core"
+    xmlns:help="clr-namespace:eCampus.Core.Helpers;assembly=eCampus.Core"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBar.Buttons>
+                <shell:ApplicationBarIconButton IsEnabled="False" IconUri="/Assets/AppBar/send.message.png" Text="відправити" Click="ApplicationBarIconButton_Click"></shell:ApplicationBarIconButton>
+            </shell:ApplicationBar.Buttons>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.Resources>
+            <conv:MessageToHorizontalAlignment x:Key="MessageToHorizontalAlignment"></conv:MessageToHorizontalAlignment>
+            <conv:CampusDateTimeToDateTimeConverter x:Key="CampusDateTimeToDateTimeConverter"></conv:CampusDateTimeToDateTimeConverter>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel содержит имя приложения и заголовок страницы-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="МОЕ ПРИЛОЖЕНИЕ" Style="{StaticResource PhoneTextNormalStyle}"/>
+        </StackPanel>
+
+        <!--ContentPanel – поместите здесь дополнительное содержимое-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+<help:MessageListBox ItemsSource="{Binding Data}" HorizontalAlignment="Stretch" Margin="12,0,12,0" Name="listBox1" >
+    <help:MessageListBox.ItemContainerStyle>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </help:MessageListBox.ItemContainerStyle>
+    <help:MessageListBox.ItemTemplate>
+        <DataTemplate>
+            <Grid Margin="0 0 0 0">
+                <c4f:ChatBubble Width="350" HorizontalContentAlignment="Stretch" ChatBubbleDirection="{Binding Converter={StaticResource MessageToHorizontalAlignment}, ConverterParameter=direction}" HorizontalAlignment="{Binding Converter={StaticResource MessageToHorizontalAlignment}, ConverterParameter=align}">
+                    <c4f:ChatBubble.Content>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
+                            <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding DateSent, Converter={StaticResource CampusDateTimeToDateTimeConverter}}" HorizontalAlignment="Right" Foreground="#FFB4B4B4" FontFamily="Segoe UI Light"></TextBlock>
+                        </StackPanel>
+                    </c4f:ChatBubble.Content>
+                </c4f:ChatBubble>
+            </Grid>
+        </DataTemplate>
+    </help:MessageListBox.ItemTemplate>
+</help:MessageListBox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <c4f:ChatBubbleTextBox x:Name="messageField" TextChanged="ChatBubbleTextBox_TextChanged" Tap="ChatBubbleTextBox_Tap" Margin="12,0" HorizontalAlignment="Right" ChatBubbleDirection="LowerRight" Width="350"/>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

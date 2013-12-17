@@ -7,13 +7,15 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using System.Collections.Generic;
 
 namespace eCampus
 {
     public partial class App : Application
     {
         private static LoginViewModel loginViewModel = null;
-        private static MyProfileViewModel myProfileViewModel = null;
+		private static MyProfileViewModel myProfileViewModel = null;
+		private static MessageViewModel messageViewModel = null;
 
         public static LoginViewModel LoginVM
         {
@@ -41,7 +43,6 @@ namespace eCampus
             }
         }
 
-		private static MessageViewModel messageViewModel = null;
 		public static MessageViewModel MessageVM
 		{
 			get
@@ -49,6 +50,17 @@ namespace eCampus
 				if (messageViewModel == null)
 					messageViewModel = new MessageViewModel();
 				return messageViewModel;
+			}
+		}
+
+		private static List<MessagePageViewModel> messagePageViewModel = null;
+		public static List<MessagePageViewModel> MessagePageVM
+		{
+			get
+			{
+				if (messagePageViewModel == null)
+					messagePageViewModel = new List<MessagePageViewModel>();
+				return messagePageViewModel;
 			}
 		}
         /// <summary>

@@ -311,8 +311,8 @@
                 </phone:PivotItem.Header>
                 <phone:PivotItem.Content>
                     <Grid>
-                        <phone:LongListSelector Margin="12,0" ItemsSource="{Binding Conversations}">
-                            <phone:LongListSelector.ItemTemplate>
+                        <ListBox x:Name="messageList" Margin="12,0" ItemsSource="{Binding Conversations}" SelectionChanged="ListBox_SelectionChanged">
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,6" >
                                         <Grid.ColumnDefinitions>
@@ -341,8 +341,8 @@
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>
-                            </phone:LongListSelector.ItemTemplate>
-                        </phone:LongListSelector>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                 </phone:PivotItem.Content>
             </phone:PivotItem>

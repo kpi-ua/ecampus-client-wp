@@ -2,6 +2,7 @@
 using Microsoft.Phone.Shell;
 using System.Windows;
 using System.Windows.Controls;
+using eCampus.Core.Models;
 
 namespace eCampus.Views
 {
@@ -58,6 +59,15 @@ namespace eCampus.Views
 			{
 
 			}
+		}
+
+		private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var groupId = ((Conversation)(((ListBox)sender).SelectedItem)).GroupId;
+			messageList.SelectionChanged -= ListBox_SelectionChanged;
+			messageList.SelectedIndex = -1;
+			messageList.SelectionChanged += ListBox_SelectionChanged;
+			NavigationService.Navigate(new System.Uri("/Views/MessageView.xaml?groupid=" + groupId, System.UriKind.Relative));
 		}
 
     }
