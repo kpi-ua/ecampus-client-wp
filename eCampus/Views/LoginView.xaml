@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="LogoPanel" Grid.Row="0" Margin="0,150,0,0">
+        <StackPanel x:Name="LogoPanel" Grid.Row="0" Margin="0,100,0,0">
             <Image HorizontalAlignment="Center" Width="250" Source="{Binding LogoSource}" x:Name="Logo"></Image>
             <!--<TextBlock Margin="12"
 				           FontSize="45"
@@ -32,7 +32,7 @@
             </TextBlock>-->
         </StackPanel>
 
-        <StackPanel VerticalAlignment="Center" x:Name="ContentPanel" Grid.Row="1"  Margin="12,0">
+        <StackPanel VerticalAlignment="Top" x:Name="ContentPanel" Grid.Row="1"  Margin="12,50,12,0">
             <StackPanel Margin="12,0,12,0" Orientation="Horizontal">
                 <Rectangle Width="10" Margin="0,0,6,0">
                     <Rectangle.Fill>
@@ -52,9 +52,10 @@
                 <TextBlock TextWrapping="NoWrap">Пароль:</TextBlock>
             </StackPanel>
             <PasswordBox Password="123" x:Name="passwordBox" />
-        </StackPanel>
 
-        <Button Grid.Row="2" Margin="12,0" Command="{Binding LoginCommand}" Click="Button_Click">Увійти</Button>
+            <Button  Grid.Row="2" Margin="0,0" Command="{Binding LoginCommand}" Click="Button_Click">Увійти</Button>
+        </StackPanel>
+        
     </Grid>
 
 </phone:PhoneApplicationPage>

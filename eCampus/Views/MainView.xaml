@@ -53,20 +53,15 @@
                     </abu:SelectedPivotItemChangedTrigger.SelectionMappings>
                     <abu:SwitchAppBarAction>
                         <abu:AppBar Id="0" Mode="Minimized">
-                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png"
-                    Text="оновити" Command="{Binding SampleCommand}"/>
+                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png" Text="оновити" Command="{Binding SampleCommand}"/>
                         </abu:AppBar>
                         <abu:AppBar Id="1" Mode="Minimized">
-                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png"
-                    Text="оновити" Command="{Binding SampleCommand}"/>
-                            <abu:AppBarButton IconUri="/Toolkit.Content/ApplicationBar.Add.png"
-                    Text="нове повідомлення" Command="{Binding SampleCommand}"/>
+                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png" Text="оновити" Command="{Binding SampleCommand}"/>
+                            <abu:AppBarButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="нове повідомлення" Command="{Binding SampleCommand}"/>
                         </abu:AppBar>
                         <abu:AppBar Id="2" Mode="Minimized">
-                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png"
-                    Text="оновити" Command="{Binding SampleCommand}"/>
-                            <abu:AppBarButton IconUri="/Toolkit.Content/ApplicationBar.Add.png"
-                    Text="нове оголошення" Command="{Binding SampleCommand}"/>
+                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png" Text="оновити" Command="{Binding SampleCommand}"/>
+                            <abu:AppBarButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="нове оголошення" Command="{Binding SampleCommand}"/>
                         </abu:AppBar>
                     </abu:SwitchAppBarAction>
                 </abu:SelectedPivotItemChangedTrigger>

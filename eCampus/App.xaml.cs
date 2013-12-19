@@ -3,30 +3,36 @@ using eCampus.Resources;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using System.Collections.Generic;
 
 namespace eCampus
 {
     public partial class App : Application
     {
-        private static LoginViewModel loginViewModel = null;
-		private static MyProfileViewModel myProfileViewModel = null;
-		private static MessageViewModel messageViewModel = null;
+        /// <summary>
+        /// Избегайте двойной инициализации
+        /// </summary>
+        private bool _phoneApplicationInitialized = false;
+
+        private static LoginViewModel _loginViewModel = null;
+		private static MyProfileViewModel _myProfileViewModel = null;
+		private static MessageViewModel _messageViewModel = null;
+        private static List<MessagePageViewModel> _messagePageViewModel = null;
 
         public static LoginViewModel LoginVM
         {
             get
             {
-                if (loginViewModel == null)
+                if (_loginViewModel == null)
                 {
-                    loginViewModel = new LoginViewModel();
+                    _loginViewModel = new LoginViewModel();
                 }
 
-                return loginViewModel;
+                return _loginViewModel;
             }
         }
         
@@ -34,12 +40,12 @@ namespace eCampus
         {
             get
             {
-                if (myProfileViewModel == null)
+                if (_myProfileViewModel == null)
                 {
-                    myProfileViewModel = new MyProfileViewModel();
+                    _myProfileViewModel = new MyProfileViewModel();
                 }
 
-                return myProfileViewModel;
+                return _myProfileViewModel;
             }
         }
 
@@ -47,22 +53,24 @@ namespace eCampus
 		{
 			get
 			{
-				if (messageViewModel == null)
-					messageViewModel = new MessageViewModel();
-				return messageViewModel;
+				if (_messageViewModel == null)
+					_messageViewModel = new MessageViewModel();
+				return _messageViewModel;
 			}
 		}
-
-		private static List<MessagePageViewModel> messagePageViewModel = null;
+		
 		public static List<MessagePageViewModel> MessagePageVM
 		{
 			get
 			{
-				if (messagePageViewModel == null)
-					messagePageViewModel = new List<MessagePageViewModel>();
-				return messagePageViewModel;
+			    if (_messagePageViewModel == null)
+			    {
+			        _messagePageViewModel = new List<MessagePageViewModel>();
+			    }
+				return _messagePageViewModel;
 			}
 		}
+
         /// <summary>
         /// Обеспечивает быстрый доступ к корневому кадру приложения телефона.
         /// </summary>
@@ -156,14 +164,11 @@ namespace eCampus
         }
 
         #region Инициализация приложения телефона
-
-        // Избегайте двойной инициализации
-        private bool phoneApplicationInitialized = false;
-
+        
         // Не добавляйте в этот метод дополнительный код
         private void InitializePhoneApplication()
         {
-            if (phoneApplicationInitialized)
+            if (_phoneApplicationInitialized)
                 return;
 
             // Создайте кадр, но не задавайте для него значение RootVisual; это позволит
@@ -178,7 +183,7 @@ namespace eCampus
             RootFrame.Navigated += CheckForResetNavigation;
 
             // Убедитесь, что инициализация не выполняется повторно
-            phoneApplicationInitialized = true;
+            _phoneApplicationInitialized = true;
         }
 
         // Не добавляйте в этот метод дополнительный код
@@ -255,7 +260,7 @@ namespace eCampus
                 //
                 // Если возникла ошибка компилятора, ResourceFlowDirection отсутствует в
                 // файл ресурсов.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
+                var flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
                 RootFrame.FlowDirection = flow;
             }
             catch

@@ -14,7 +14,7 @@ namespace eCampus.Core.ViewModels
 
         public static event MyProfileDownloadEventHandler MyProfileDownloadFailed;
         
-        private MyProfile currentUser;
+        private MyProfile _currentUser;
 
 		public MyProfileViewModel()
 		{
@@ -38,9 +38,9 @@ namespace eCampus.Core.ViewModels
         {
             get 
             {
-                if (this.currentUser!=null)
+                if (this._currentUser!=null)
                 {
-                    return this.currentUser.Data.Profiles; 
+                    return this._currentUser.Data.Profiles; 
                 }
 
 				return null;
@@ -51,9 +51,9 @@ namespace eCampus.Core.ViewModels
         { 
             get
             {
-                if (this.currentUser != null)
+                if (this._currentUser != null)
                 {
-                    return this.currentUser.Data.Employees;
+                    return this._currentUser.Data.Employees;
                 }
 				return null;
             }
@@ -63,9 +63,9 @@ namespace eCampus.Core.ViewModels
         {
             get
             {
-                if (this.currentUser != null)
+                if (this._currentUser != null)
                 {
-                    return this.currentUser.Data.Employees.Count;
+                    return this._currentUser.Data.Employees.Count;
 				} 
 				return 0;
             }
@@ -75,9 +75,9 @@ namespace eCampus.Core.ViewModels
         {
             get
             {
-                if (this.currentUser != null)
+                if (this._currentUser != null)
                 {
-                    return this.currentUser.Data.Personalities;
+                    return this._currentUser.Data.Personalities;
                 }
 				return null;
             }
@@ -87,9 +87,9 @@ namespace eCampus.Core.ViewModels
         {
             get
             {
-                if (this.currentUser != null)
+                if (this._currentUser != null)
                 {
-                    return this.currentUser.Data.Personalities.Count;
+                    return this._currentUser.Data.Personalities.Count;
                 }
 				return 0;
             }
@@ -99,9 +99,9 @@ namespace eCampus.Core.ViewModels
         { 
             get 
             {
-                if (this.currentUser != null)
+                if (this._currentUser != null)
                 {
-                    return this.currentUser.Data.Photo;
+                    return this._currentUser.Data.Photo;
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace eCampus.Core.ViewModels
 		{
 			get
 			{
-				if (this.currentUser != null)
+				if (this._currentUser != null)
 				{
 					return this.CurrentUser.Data.FullName;
 				}
@@ -126,13 +126,13 @@ namespace eCampus.Core.ViewModels
 		{
 			get
 			{
-				return currentUser;
+				return _currentUser;
 			}
 			set
 			{
-				if (this.currentUser != value)
+				if (this._currentUser != value)
 				{
-					this.currentUser = value;
+					this._currentUser = value;
 					this.RaisePropertyChanged("CurrentUser");
 					this.RaisePropertyChanged("FullName");
 					this.RaisePropertyChanged("Image");

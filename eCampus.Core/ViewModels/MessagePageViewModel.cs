@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using eCampus.Core.Models;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using eCampus.Core.Models;
 
 namespace eCampus.Core.ViewModels
 {
 	public class MessagePageViewModel
 	{
-		private UserDialog conversation;
-		private string groupID;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+		private UserDialog _conversation;
+		private string _groupID;
+
 		public MessagePageViewModel(string groupId)
 		{
 			this.GroupID = groupId;
@@ -26,13 +25,13 @@ namespace eCampus.Core.ViewModels
 		{
 			get
 			{
-				return groupID;
+				return _groupID;
 			}
 			set
 			{
-				if (this.groupID != value)
+				if (this._groupID != value)
 				{
-					this.groupID = value;
+					this._groupID = value;
 					this.RaisePropertyChanged("GroupID");
 				}
 			}
@@ -42,13 +41,13 @@ namespace eCampus.Core.ViewModels
 		{
 			get
 			{
-				return conversation;
+				return _conversation;
 			}
 			set
 			{
-				if (this.conversation != value)
+				if (this._conversation != value)
 				{
-					this.conversation = value;
+					this._conversation = value;
 					this.RaisePropertyChanged("Conversations");
 				}
 			}
@@ -61,11 +60,11 @@ namespace eCampus.Core.ViewModels
 			this.RaisePropertyChanged("Data");
 			this.RaisePropertyChanged("");
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
+		
 		private void RaisePropertyChanged(string propertyName)
 		{
 			PropertyChangedEventHandler handler = this.PropertyChanged;
+
 			if (handler != null)
 			{
 				handler(this, new PropertyChangedEventArgs(propertyName));
