@@ -359,6 +359,11 @@
                         статистика
                     </TextBlock>
                 </phone:PivotItem.Header>
+                <phone:PivotItem.Content>
+                    <Grid>
+                        <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" Opacity="0.1" Click="Logout_click">logout</Button>
+                    </Grid>
+                </phone:PivotItem.Content>
             </phone:PivotItem>
 
         </phone:Pivot>

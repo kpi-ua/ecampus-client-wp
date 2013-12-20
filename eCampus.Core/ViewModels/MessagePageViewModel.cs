@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -54,12 +55,27 @@ namespace eCampus.Core.ViewModels
 			}
 		}
 
+		public ObservableCollection<Message> Data
+		{
+			get
+			{
+				return Conversation.Data;
+			}
+			set
+			{
+				if (this.Conversation.Data != value)
+				{
+					this.Conversation.Data = value;
+					this.RaisePropertyChanged("Data");
+				}
+			}
+		}
+
 		public void AddMessageToDialog(Message message)
 		{
-			Conversation.Data.Add(message);
+			this.Data.Add(message);
 			this.RaisePropertyChanged("Conversations");
 			this.RaisePropertyChanged("Data");
-			this.RaisePropertyChanged("");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

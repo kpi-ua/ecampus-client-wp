@@ -6,6 +6,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Collections.Generic;
 
 namespace eCampus.Core.ViewModels
 {
@@ -106,7 +107,8 @@ namespace eCampus.Core.ViewModels
                 return _logoSource;
             }
         }
-        
+
+		
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;

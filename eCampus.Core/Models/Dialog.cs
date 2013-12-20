@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -156,7 +157,16 @@ namespace eCampus.Core.Models
 		{
 			get
 			{
-				return data;
+				try
+				{
+				return Sort(data);
+
+				}
+				catch (Exception)
+				{
+					return data;
+					
+				}
 			}
 			set
 			{
@@ -166,6 +176,32 @@ namespace eCampus.Core.Models
 					this.RaisePropertyChanged("Data");
 				}
 			}
+		}
+
+		private ObservableCollection<Message> Sort(ObservableCollection<Message> oc)
+		{
+			for (int i = 0; i < oc.Count; i++)
+			{
+				
+			}
+
+			Message temp;
+
+			for (int i = 0; i < oc.Count - 1; i++)
+			{
+				for (int j = 0; j < oc.Count - i - 1; j++)
+				{
+					//DateTime.ParseExact((string)value, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
+					//if (oc[j].DateSent > oc[j + 1])
+					if (DateTime.ParseExact((string)oc[j].DateSent, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) > DateTime.ParseExact((string)oc[j + 1].DateSent, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture))
+					{
+						temp = oc[j];
+						oc[j] = oc[j + 1];
+						oc[j + 1] = temp;
+					}
+				}
+			}
+			return oc;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

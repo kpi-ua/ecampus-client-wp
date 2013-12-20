@@ -30,6 +30,7 @@
         <Grid.Resources>
             <conv:MessageToHorizontalAlignment x:Key="MessageToHorizontalAlignment"></conv:MessageToHorizontalAlignment>
             <conv:CampusDateTimeToDateTimeConverter x:Key="CampusDateTimeToDateTimeConverter"></conv:CampusDateTimeToDateTimeConverter>
+            <conv:ReverseMessageConverter x:Key="ReverseMessageConverter"></conv:ReverseMessageConverter>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

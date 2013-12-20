@@ -8,11 +8,24 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using System.Collections.Generic;
+using Microsoft.Phone.Notification;
 
 namespace eCampus
 {
     public partial class App : Application
     {
+		public static HttpNotificationChannel CurrentChannel { get; private set; }
+		private void AcquirePushChannel()
+		{
+			CurrentChannel = HttpNotificationChannel.Find("CampusPush");
+			if (CurrentChannel == null)
+			{
+				CurrentChannel = new HttpNotificationChannel("CampusPush");
+				CurrentChannel.Open();
+				CurrentChannel.BindToShellToast();
+			}
+		}
+
         private static LoginViewModel loginViewModel = null;
 		private static MyProfileViewModel myProfileViewModel = null;
 		private static MessageViewModel messageViewModel = null;
@@ -115,6 +128,7 @@ namespace eCampus
         // Этот код не будет выполняться при повторной активации приложения
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+			AcquirePushChannel();
         }
 
         // Код для выполнения при активации приложения (переводится в основной режим)

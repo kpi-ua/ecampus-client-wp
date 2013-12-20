@@ -2,6 +2,8 @@
 using eCampus.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System;
 
 namespace eCampus.Core.ViewModels
 {
@@ -18,7 +20,7 @@ namespace eCampus.Core.ViewModels
 
 		public MyProfileViewModel()
 		{
-			Load();
+			//Load();
 		}
 
 		async public void Load()
@@ -32,6 +34,21 @@ namespace eCampus.Core.ViewModels
 			{
 				MyProfileDownloadCompleted();
 			}
+
+		}
+
+		async public Task<object> DeviceRegistration(string channel)
+		{
+			Microsoft.WindowsAzure.MobileServices.MobileServiceClient m = new Microsoft.WindowsAzure.MobileServices.MobileServiceClient(new Uri("http://campuspush.azure-mobile.net"),"bSVUJHyveDCRNafFTRXbzuJnQRcntQ23");
+			Dictionary<string, string> d = new Dictionary<string, string>();
+			d.Add("operatingSystem", "windowsphone");
+			d.Add("userid", this.UserId.ToString());
+			string[] names = this.FullName.Split(' ');
+			d.Add("firstname", names[0]);
+			d.Add("lastname", names[1]);
+			d.Add("channel", channel);
+			var x = await m.InvokeApiAsync("deviceregistration", System.Net.Http.HttpMethod.Post, d);
+			return x;
 		}
 
         public List<Profile> Profiles
@@ -58,6 +75,17 @@ namespace eCampus.Core.ViewModels
 				return null;
             }
         }
+		public int UserId
+		{
+			get
+			{
+				if (this.currentUser != null)
+				{
+					return this.currentUser.Data.UserAccountId;
+				}
+				return 0;
+			}
+		}
 
         public int EmployeesPlaceCount
         {
