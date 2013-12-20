@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Globalization;
 
 namespace eCampus.Views
 {
@@ -68,7 +69,7 @@ namespace eCampus.Views
 
 		async private void ApplicationBarIconButton_Click(object sender, EventArgs e)
 		{
-            _mvm.AddMessageToDialog(new Message() { DateSent = DateTime.Now.ToString(), SenderUserAccountId = Convert.ToInt32(CampusClient.UserID), MassageGroupId = Convert.ToInt32(NavigationContext.QueryString["groupid"]), Text = messageField.Text });
+            _mvm.AddMessageToDialog(new Message() { DateSent = DateTime.Now.ToString("G", new CultureInfo("en-US")), SenderUserAccountId = Convert.ToInt32(CampusClient.UserID), MassageGroupId = Convert.ToInt32(NavigationContext.QueryString["groupid"]), Text = messageField.Text });
 			await CampusClient.SendMessage(NavigationContext.QueryString["groupid"], messageField.Text);
 			messageField.Text = string.Empty;
 			Dispatcher.BeginInvoke(() =>
