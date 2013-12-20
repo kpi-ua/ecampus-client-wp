@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
+﻿using Coding4Fun.Toolkit.Controls;
+using eCampus.Core.Helpers;
+using eCampus.Core.Models;
+using eCampus.Core.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using eCampus.Core.Helpers;
-using eCampus.Core.ViewModels;
-using Coding4Fun.Toolkit.Controls;
-using eCampus.Core.Models;
-using System.Globalization;
+using System;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace eCampus.Views
 {
 	public partial class MessageView : PhoneApplicationPage
 	{
-		MessagePageViewModel mvm;
+        private MessagePageViewModel _mvm;
+
 		public MessageView()
 		{
 			InitializeComponent();
@@ -27,19 +24,19 @@ namespace eCampus.Views
 		{
 			base.OnNavigatedTo(e);
 			var groupid = NavigationContext.QueryString["groupid"];
-			if(!App.MessagePageVM.ContainsConversation(groupid.ToString()))
+            if (!App.MessagePageVM.ContainsConversation(groupid.ToString()))
 			{
-				mvm = new MessagePageViewModel(groupid.ToString());
-				await mvm.LoadConversation(groupid.ToString());
-				App.MessagePageVM.Add(mvm);
+                _mvm = new MessagePageViewModel(groupid.ToString());
+                await _mvm.LoadConversation(groupid.ToString());
+                App.MessagePageVM.Add(_mvm);
 			}
 			else
 			{
-				mvm = (from a in App.MessagePageVM
+                _mvm = (from a in App.MessagePageVM
 					   where a.GroupID == groupid
 					   select a).SingleOrDefault();
 			}
-			this.DataContext = mvm.Conversation;
+            this.DataContext = _mvm.Conversation;
 			
 			Dispatcher.BeginInvoke(() =>
 			{
@@ -50,7 +47,7 @@ namespace eCampus.Views
 
 		private void ChatBubbleTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			if (((ChatBubbleTextBox)sender).Text!="")
+            if (((ChatBubbleTextBox)sender).Text != "")
 			{
 				((ApplicationBarIconButton)ApplicationBar.Buttons[0]).IsEnabled = true;
 			}
@@ -59,8 +56,6 @@ namespace eCampus.Views
 				((ApplicationBarIconButton)ApplicationBar.Buttons[0]).IsEnabled = false;
 			}
 		}
-
-		
 
 		private void ChatBubbleTextBox_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
@@ -73,7 +68,7 @@ namespace eCampus.Views
 
 		async private void ApplicationBarIconButton_Click(object sender, EventArgs e)
 		{
-			mvm.AddMessageToDialog(new Message() { DateSent = DateTime.Now.ToString("G", new CultureInfo("en-US")), SenderUserAccountId = Convert.ToInt32(CampusClient.UserID), MassageGroupId = Convert.ToInt32(NavigationContext.QueryString["groupid"]), Text = messageField.Text });
+            _mvm.AddMessageToDialog(new Message() { DateSent = DateTime.Now.ToString(), SenderUserAccountId = Convert.ToInt32(CampusClient.UserID), MassageGroupId = Convert.ToInt32(NavigationContext.QueryString["groupid"]), Text = messageField.Text });
 			await CampusClient.SendMessage(NavigationContext.QueryString["groupid"], messageField.Text);
 			messageField.Text = string.Empty;
 			Dispatcher.BeginInvoke(() =>
@@ -83,10 +78,6 @@ namespace eCampus.Views
 				listBox1.ScrollToBottom();
 				listBox1.UpdateLayout();
 			});
-			
 		}
-
-
-
 	}
 }

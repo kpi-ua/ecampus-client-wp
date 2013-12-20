@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -9,84 +7,89 @@ using System.Threading.Tasks;
 
 namespace eCampus.Core.Models
 {
-	public class Message:INotifyPropertyChanged
+    public class Message : INotifyPropertyChanged
 	{
-		private int senderUserAccountId;
+        private int _senderUserAccountId;
+        private int _messageId;
+        private int _massageGroupId;
+        private object _messageDetail;
+        private string _dateSent;
+
 		public int SenderUserAccountId
 		{
 			get
 			{
-				return senderUserAccountId;
+                return _senderUserAccountId;
 			}
 			set
 			{
-				if (this.senderUserAccountId != value)
+                if (this._senderUserAccountId != value)
 				{
-					this.senderUserAccountId = value;
+                    this._senderUserAccountId = value;
 					this.RaisePropertyChanged("SenderUserAccountId");
 				}
 			}
 		}
-		private int messageId;
+
 		public int MessageId
 		{
 			get
 			{
-				return messageId;
+                return _messageId;
 			}
 			set
 			{
-				if (this.messageId != value)
+                if (this._messageId != value)
 				{
-					this.messageId = value;
+                    this._messageId = value;
 					this.RaisePropertyChanged("MessageId");
 				}
 			}
 		}
-		private int massageGroupId;
+
 		public int MassageGroupId
 		{
 			get
 			{
-				return massageGroupId;
+                return _massageGroupId;
 			}
 			set
 			{
-				if (this.massageGroupId != value)
+                if (this._massageGroupId != value)
 				{
-					this.massageGroupId = value;
+                    this._massageGroupId = value;
 					this.RaisePropertyChanged("MassageGroupId");
 				}
 			}
 		}
-		private object messageDetail;
+        
 		public object MessageDetail
 		{
 			get
 			{
-				return messageDetail;
+                return _messageDetail;
 			}
 			set
 			{
-				if (this.messageDetail != value)
+                if (this._messageDetail != value)
 				{
-					this.messageDetail = value;
+                    this._messageDetail = value;
 					this.RaisePropertyChanged("MessageDetail");
 				}
 			}
 		}
-		private string dateSent;
+        
 		public string DateSent
 		{
 			get
 			{
-				return dateSent;
+                return _dateSent;
 			}
 			set
 			{
-				if (this.dateSent != value)
+                if (this._dateSent != value)
 				{
-					this.dateSent = value;
+                    this._dateSent = value;
 					this.RaisePropertyChanged("DateSent");
 				}
 			}
@@ -134,7 +137,7 @@ namespace eCampus.Core.Models
 		}
 	}
 
-	public class UserDialog:INotifyPropertyChanged
+    public class UserDialog : INotifyPropertyChanged
 	{
 		private int statusCode;
 		public int StatusCode
@@ -164,9 +167,9 @@ namespace eCampus.Core.Models
 				}
 				catch (Exception)
 				{
-					return data;
+				return data;
 					
-				}
+			}
 			}
 			set
 			{

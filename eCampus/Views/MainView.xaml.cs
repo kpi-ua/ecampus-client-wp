@@ -10,16 +10,16 @@ namespace eCampus.Views
 {
     public partial class MainView : PhoneApplicationPage
     {
-        ProgressIndicator progressIndicator;
+        private readonly ProgressIndicator _progressIndicator;
 
         public MainView()
         {
             InitializeComponent();
-            progressIndicator = new ProgressIndicator() { IsVisible = false, IsIndeterminate = true, Text = "" };
+            _progressIndicator = new ProgressIndicator() { IsVisible = false, IsIndeterminate = true, Text = "" };
 			App.MyProfileVM.MyProfileDownloadStarted += () => 
 			{ 
-				progressIndicator.Text = "Завантаження профілю...";
-				progressIndicator.IsVisible = true; 
+                _progressIndicator.Text = "Завантаження профілю...";
+                _progressIndicator.IsVisible = true;
 			};
 			App.MyProfileVM.MyProfileDownloadCompleted += async () => 
 			{
@@ -28,14 +28,14 @@ namespace eCampus.Views
 			};
 			App.MessageVM.MyConversationsDownloadStarted += () =>
 			{
-				progressIndicator.Text = "Завантаження листувань...";
-				progressIndicator.IsVisible = true;
+                _progressIndicator.Text = "Завантаження листувань...";
+                _progressIndicator.IsVisible = true;
 			};
 			App.MessageVM.MyConversationsDownloadCompleted += () =>
 			{
-				progressIndicator.IsVisible = false;
+                _progressIndicator.IsVisible = false;
 			};
-            SystemTray.SetProgressIndicator(this, progressIndicator);
+            SystemTray.SetProgressIndicator(this, _progressIndicator);
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
