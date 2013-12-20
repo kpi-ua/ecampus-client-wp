@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -183,11 +184,6 @@ namespace eCampus.Core.Models
 
 		private ObservableCollection<Message> Sort(ObservableCollection<Message> oc)
 		{
-			for (int i = 0; i < oc.Count; i++)
-			{
-				
-			}
-
 			Message temp;
 
 			for (int i = 0; i < oc.Count - 1; i++)

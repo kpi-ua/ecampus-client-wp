@@ -23,7 +23,7 @@ namespace eCampus.Views
 			};
 			App.MyProfileVM.MyProfileDownloadCompleted += async () => 
 			{
-				progressIndicator.IsVisible = false;
+				_progressIndicator.IsVisible = false;
 				var x = await App.MyProfileVM.DeviceRegistration(App.CurrentChannel.ChannelUri.ToString());
 			};
 			App.MessageVM.MyConversationsDownloadStarted += () =>

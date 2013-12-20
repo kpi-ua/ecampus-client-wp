@@ -79,9 +79,9 @@ namespace eCampus.Core.ViewModels
 		{
 			get
 			{
-				if (this.currentUser != null)
+				if (this._currentUser != null)
 				{
-					return this.currentUser.Data.UserAccountId;
+					return this._currentUser.Data.UserAccountId;
 				}
 				return 0;
 			}

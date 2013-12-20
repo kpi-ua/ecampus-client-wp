@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using System.Collections.Generic;
 using Microsoft.Phone.Notification;
 
 namespace eCampus
@@ -178,11 +177,12 @@ namespace eCampus
         }
 
         #region Инициализация приложения телефона
-
+		// Избегайте двойной инициализации
+		private bool phoneApplicationInitialized = false;
         // Не добавляйте в этот метод дополнительный код
         private void InitializePhoneApplication()
         {
-            if (_phoneApplicationInitialized)
+            if (phoneApplicationInitialized)
                 return;
 
             // Создайте кадр, но не задавайте для него значение RootVisual; это позволит
@@ -197,7 +197,7 @@ namespace eCampus
             RootFrame.Navigated += CheckForResetNavigation;
 
             // Убедитесь, что инициализация не выполняется повторно
-            _phoneApplicationInitialized = true;
+            phoneApplicationInitialized = true;
         }
 
         // Не добавляйте в этот метод дополнительный код
