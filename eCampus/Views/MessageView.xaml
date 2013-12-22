@@ -49,27 +49,28 @@
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-<help:MessageListBox ItemsSource="{Binding Data}" HorizontalAlignment="Stretch" Margin="12,0,12,0" Name="listBox1" >
-    <help:MessageListBox.ItemContainerStyle>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        </Style>
-    </help:MessageListBox.ItemContainerStyle>
-    <help:MessageListBox.ItemTemplate>
-        <DataTemplate>
-            <Grid Margin="0 0 0 0">
-                <c4f:ChatBubble Width="350" HorizontalContentAlignment="Stretch" ChatBubbleDirection="{Binding Converter={StaticResource MessageToHorizontalAlignment}, ConverterParameter=direction}" HorizontalAlignment="{Binding Converter={StaticResource MessageToHorizontalAlignment}, ConverterParameter=align}">
-                    <c4f:ChatBubble.Content>
-                        <StackPanel HorizontalAlignment="Stretch">
-                            <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
-                            <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding DateSent, Converter={StaticResource CampusDateTimeToDateTimeConverter}}" HorizontalAlignment="Right" Foreground="#FFB4B4B4" FontFamily="Segoe UI Light"></TextBlock>
-                        </StackPanel>
-                    </c4f:ChatBubble.Content>
-                </c4f:ChatBubble>
-            </Grid>
-        </DataTemplate>
-    </help:MessageListBox.ItemTemplate>
-</help:MessageListBox>
+                <help:MessageListBox ItemsSource="{Binding Data}" HorizontalAlignment="Stretch" Margin="12,0,12,0" Name="listBox1" >
+                    <help:MessageListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </help:MessageListBox.ItemContainerStyle>
+                    <help:MessageListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0 0 0 0">
+                                <c4f:ChatBubble Width="350" HorizontalContentAlignment="Stretch" ChatBubbleDirection="{Binding Converter={StaticResource MessageToHorizontalAlignment}, ConverterParameter=direction}" HorizontalAlignment="{Binding Converter={StaticResource MessageToHorizontalAlignment}, ConverterParameter=align}">
+                                    <c4f:ChatBubble.Content>
+                                        <StackPanel HorizontalAlignment="Stretch">
+                                            <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
+                                            <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding DateSent, Converter={StaticResource CampusDateTimeToDateTimeConverter}}" HorizontalAlignment="Right" Foreground="#FFB4B4B4" FontFamily="Segoe UI Light"></TextBlock>
+                                        </StackPanel>
+                                    </c4f:ChatBubble.Content>
+                                </c4f:ChatBubble>
+                            </Grid>
+
+                        </DataTemplate>
+                    </help:MessageListBox.ItemTemplate>
+                </help:MessageListBox>
             </Grid>
             <Grid Grid.Row="1">
                 <c4f:ChatBubbleTextBox x:Name="messageField" TextChanged="ChatBubbleTextBox_TextChanged" Tap="ChatBubbleTextBox_Tap" Margin="12,0" HorizontalAlignment="Right" ChatBubbleDirection="LowerRight" Width="350"/>

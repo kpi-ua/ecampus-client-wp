@@ -49,5 +49,12 @@ namespace eCampus.Core.Helpers
 			var result = IsolatedStorageHelpers.OpenFromStore<Result>(ResultStoreName);
 			await WebHelpers.DownloadString(new Uri(Client.BuildUrl("message", "SendMessage") + "?sessionId=" + result.Data + "&groupid=" + groupId + "&text=" + text));
 		}
+
+		async internal static Task<Board> GetActualBB()
+		{
+			var result = IsolatedStorageHelpers.OpenFromStore<Result>(ResultStoreName);
+			var json = await WebHelpers.DownloadString(new Uri(Client.BuildUrl("bulletinboard", "GetActual") + "?sessionId=" + result.Data));
+			return JsonConvert.DeserializeObject<Board>(json);
+		}
 	}
 }

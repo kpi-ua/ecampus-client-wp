@@ -83,6 +83,17 @@ namespace eCampus
 			}
 		}
 
+		private static BulletinBoardViewModel bulletinBoardViewModel = null;
+		public static BulletinBoardViewModel BulletinBoardVM
+		{
+			get
+			{
+				if (bulletinBoardViewModel == null)
+					bulletinBoardViewModel = new BulletinBoardViewModel();
+				return bulletinBoardViewModel;
+			}
+		}
+
         /// <summary>
         /// Обеспечивает быстрый доступ к корневому кадру приложения телефона.
         /// </summary>

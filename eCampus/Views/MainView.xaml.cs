@@ -57,7 +57,7 @@ namespace eCampus.Views
 			}
 			else if (((Pivot)sender).SelectedIndex == 2)
 			{
-
+				this.bulletinBoardTab.DataContext = App.BulletinBoardVM;
 			}
 			else if (((Pivot)sender).SelectedIndex == 3)
 			{

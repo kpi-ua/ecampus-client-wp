@@ -341,12 +341,32 @@
                     </Grid>
                 </phone:PivotItem.Content>
             </phone:PivotItem>
-            <phone:PivotItem>
+            <phone:PivotItem x:Name="bulletinBoardTab">
                 <phone:PivotItem.Header>
                     <TextBlock FontSize="65">
                         оголошення
                     </TextBlock>
                 </phone:PivotItem.Header>
+                <phone:PivotItem.Content>
+                    <Grid>
+                        <ListBox Margin="12,0" ItemsSource="{Binding Bulletins}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Margin="0,3" Grid.Row="0" FontFamily="Segoe WP Light" FontSize="38" Text="{Binding Subject}"></TextBlock>
+                                        <TextBlock Grid.Row="1" Text="{Binding Text}"></TextBlock>
+                                        <TextBlock Grid.Row="2" HorizontalAlignment="Right" Text="{Binding DateCreate}"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </phone:PivotItem.Content>
             </phone:PivotItem>
             <phone:PivotItem>
                 <phone:PivotItem.Header>
