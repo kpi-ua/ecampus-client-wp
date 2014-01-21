@@ -146,6 +146,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
@@ -199,9 +200,8 @@
     <Reference Include="AppBarUtils">
       <HintPath>..\packages\AppBarUtils.2.4\lib\windowsphone8\AppBarUtils.dll</HintPath>
     </Reference>
-    <Reference Include="Campus.SDK, Version=0.1.7.15, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\campus.sdk.0.1.7.15\lib\portable-net45+sl5+wp8+win8\Campus.SDK.dll</HintPath>
+    <Reference Include="Campus.SDK">
+      <HintPath>..\packages\campus.sdk.0.1.8.50\lib\portable-net45+sl5+wp8+win8\Campus.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Coding4Fun.Toolkit.Controls">
       <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.7\lib\windowsphone8\Coding4Fun.Toolkit.Controls.dll</HintPath>
@@ -217,16 +217,6 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Mobile, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WindowsAzure.MobileServices.1.1.1\lib\wp8\Microsoft.WindowsAzure.Mobile.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Mobile.Ext">
-      <HintPath>..\packages\WindowsAzure.MobileServices.1.1.1\lib\wp8\Microsoft.WindowsAzure.Mobile.Ext.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Mobile.UI">
-      <HintPath>..\packages\WindowsAzure.MobileServices.1.1.1\lib\wp8\Microsoft.WindowsAzure.Mobile.UI.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -253,6 +243,9 @@
     </Reference>
     <Reference Include="WriteableBitmapExWinPhoneXnaDependant">
       <HintPath>..\packages\WriteableBitmapEx.1.0.9.0\lib\WindowsPhone8\WriteableBitmapExWinPhoneXnaDependant.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList">
+      <HintPath>..\packages\X.PagedList.1.20.2.35\lib\portable-net4+sl5+wp8+win8\X.PagedList.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
