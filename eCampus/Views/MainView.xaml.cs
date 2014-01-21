@@ -41,6 +41,16 @@ namespace eCampus.Views
 				{
 					NavigationService.Navigate(new Uri("/Views/CreateGroupView.xaml", UriKind.Relative));
 				};
+			App.MainVM.AboutOpenEvent += () =>
+				{
+					Coding4Fun.Toolkit.Controls.AboutPrompt a = new Coding4Fun.Toolkit.Controls.AboutPrompt();
+					a.Title = "eCampus v0.7";
+					a.Body = "Версія CampusAPI - 1.8\n\nРозробник - Великоіваненко Вадим";
+					a.VersionNumber = "0.7";
+					a.Show();
+					
+				};
+			
 			SystemTray.SetProgressIndicator(this, _progressIndicator);
 		}
 
@@ -88,6 +98,7 @@ namespace eCampus.Views
 		/// <param name="e"></param>
 		async private void Logout_click(object sender, RoutedEventArgs e)
 		{
+			
 			Microsoft.WindowsAzure.MobileServices.MobileServiceClient m = new Microsoft.WindowsAzure.MobileServices.MobileServiceClient(new Uri("http://campuspush.azure-mobile.net"), "bSVUJHyveDCRNafFTRXbzuJnQRcntQ23");
 			Dictionary<string, string> d = new Dictionary<string, string>();
 			d.Add("userid", App.MyProfileVM.UserId.ToString());

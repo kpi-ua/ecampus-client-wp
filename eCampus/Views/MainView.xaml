@@ -58,11 +58,13 @@
 						<abu:SelectionMapping SourceIndex="3" TargetIndex="0" />
 					</abu:SelectedPivotItemChangedTrigger.SelectionMappings>
 					<abu:SwitchAppBarAction>
-
 						<abu:AppBar Id="0" Mode="Minimized">
 							<abu:AppBarButton Command="{Binding SampleCommand}"
 							                  IconUri="/Assets/AppBar/refresh.png"
 							                  Text="оновити" />
+							<abu:AppBar.MenuItems>
+								<abu:AppBarMenuItem Command="{Binding AboutOpenCommand}" Text="про програму" />
+							</abu:AppBar.MenuItems>
 						</abu:AppBar>
 						<abu:AppBar Id="1" Mode="Minimized">
 							<abu:AppBarButton Command="{Binding SampleCommand}"
@@ -71,6 +73,9 @@
 							<abu:AppBarButton Command="{Binding CreateGroupCommand}"
 							                  IconUri="/Toolkit.Content/ApplicationBar.Add.png"
 							                  Text="створити групу" />
+							<abu:AppBar.MenuItems>
+								<abu:AppBarMenuItem Command="{Binding AboutOpenCommand}" Text="про програму" />
+							</abu:AppBar.MenuItems>
 						</abu:AppBar>
 						<abu:AppBar Id="2" Mode="Minimized">
 							<abu:AppBarButton Command="{Binding SampleCommand}"
@@ -79,6 +84,9 @@
 							<abu:AppBarButton Command="{Binding SampleCommand}"
 							                  IconUri="/Toolkit.Content/ApplicationBar.Add.png"
 							                  Text="нове оголошення" />
+							<abu:AppBar.MenuItems>
+								<abu:AppBarMenuItem Command="{Binding AboutOpenCommand}" Text="про програму" />
+							</abu:AppBar.MenuItems>
 						</abu:AppBar>
 					</abu:SwitchAppBarAction>
 				</abu:SelectedPivotItemChangedTrigger>
