@@ -15,14 +15,14 @@ namespace eCampus.Core.Helpers
 		//	return str.Split(new char[] { ' ', '.', '?' },
 		//					 StringSplitOptions.RemoveEmptyEntries).Length;
 		//}
-		public static bool ContainsConversation(this List<MessagePageViewModel> list, string groupid)
-		{
-			var query = (from a in list
-						where a.GroupID == groupid
-						select a).ToList();
-			if (query.Count == 0)
-				return false;
-			return true;
-		}
+		//public static bool ContainsConversation(this List<MessagePageViewModel> list, string groupid)
+		//{
+		//	var query = (from a in list
+		//				where a.GroupID == groupid
+		//				select a).ToList();
+		//	if (query.Count == 0)
+		//		return false;
+		//	return true;
+		//}
 	}
 }

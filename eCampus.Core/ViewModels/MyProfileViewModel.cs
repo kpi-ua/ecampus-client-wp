@@ -14,7 +14,7 @@ namespace eCampus.Core.ViewModels
 		public event MyProfileDownloadEventHandler MyProfileDownloadCompleted;
 		public event PropertyChangedEventHandler PropertyChanged;
 
-        public static event MyProfileDownloadEventHandler MyProfileDownloadFailed;
+        //public static event MyProfileDownloadEventHandler MyProfileDownloadFailed;
         
         private MyProfile _currentUser;
 

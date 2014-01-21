@@ -12,7 +12,7 @@ namespace eCampus.Core.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo language)
 		{
-			var a = DateTime.ParseExact((string)value, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
+			var a = DateTime.ParseExact((string)value, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
 			if (DateTime.Now.Date == a.Date)
 			{
 				var q = a.ToString("H:mm");

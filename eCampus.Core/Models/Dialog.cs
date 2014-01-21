@@ -5,112 +5,30 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.Windows.Controls;
+
 
 namespace eCampus.Core.Models
 {
-    public class Message : INotifyPropertyChanged
+	public class Message : INotifyPropertyChanged
 	{
-        private int _senderUserAccountId;
-        private int _messageId;
-        private int _massageGroupId;
-        private object _messageDetail;
-        private string _dateSent;
-
-		public int SenderUserAccountId
+		private ConversationViewMessageType type;
+		public ConversationViewMessageType Type
 		{
 			get
 			{
-                return _senderUserAccountId;
+				return type;
 			}
 			set
 			{
-                if (this._senderUserAccountId != value)
+				if (this.type != value)
 				{
-                    this._senderUserAccountId = value;
-					this.RaisePropertyChanged("SenderUserAccountId");
+					this.type = value;
+					this.RaisePropertyChanged("Type");
 				}
 			}
 		}
 
-		public int MessageId
-		{
-			get
-			{
-                return _messageId;
-			}
-			set
-			{
-                if (this._messageId != value)
-				{
-                    this._messageId = value;
-					this.RaisePropertyChanged("MessageId");
-				}
-			}
-		}
-
-		public int MassageGroupId
-		{
-			get
-			{
-                return _massageGroupId;
-			}
-			set
-			{
-                if (this._massageGroupId != value)
-				{
-                    this._massageGroupId = value;
-					this.RaisePropertyChanged("MassageGroupId");
-				}
-			}
-		}
-        
-		public object MessageDetail
-		{
-			get
-			{
-                return _messageDetail;
-			}
-			set
-			{
-                if (this._messageDetail != value)
-				{
-                    this._messageDetail = value;
-					this.RaisePropertyChanged("MessageDetail");
-				}
-			}
-		}
-        
-		public string DateSent
-		{
-			get
-			{
-                return _dateSent;
-			}
-			set
-			{
-                if (this._dateSent != value)
-				{
-                    this._dateSent = value;
-					this.RaisePropertyChanged("DateSent");
-				}
-			}
-		}
-		private string subject;
-		public string Subject
-		{
-			get
-			{
-				return subject;
-			}
-			set
-			{
-				if (this.subject != value)
-				{
-					this.subject = value;
-					this.RaisePropertyChanged("Subject");
-				}
-			}
-		}
 		private string text;
 		public string Text
 		{
@@ -127,6 +45,91 @@ namespace eCampus.Core.Models
 				}
 			}
 		}
+		private string senderUserAccountId;
+		public string SenderUserAccountId
+		{
+			get
+			{
+				return senderUserAccountId;
+			}
+			set
+			{
+				if (this.senderUserAccountId != value)
+				{
+					this.senderUserAccountId = value;
+					this.RaisePropertyChanged("SenderUserAccountId");
+				}
+			}
+		}
+
+		private string senderUserAccountPhoto;
+		public string SenderUserAccountPhoto
+		{
+			get
+			{
+				return senderUserAccountPhoto;
+			}
+			set
+			{
+				if (this.senderUserAccountPhoto != value)
+				{
+					this.senderUserAccountPhoto = value;
+					this.RaisePropertyChanged("SenderUserAccountPhoto");
+				}
+			}
+		}
+
+		private string senderUserAccountFullName;
+		public string SenderUserAccountFullName
+		{
+			get
+			{
+				return senderUserAccountFullName;
+			}
+			set
+			{
+				if (this.senderUserAccountFullName != value)
+				{
+					this.senderUserAccountFullName = value;
+					this.RaisePropertyChanged("SenderUserAccountFullName");
+				}
+			}
+		}
+
+		private string messageId;
+		public string MessageId
+		{
+			get
+			{
+				return messageId;
+			}
+			set
+			{
+				if (this.messageId != value)
+				{
+					this.messageId = value;
+					this.RaisePropertyChanged("MessageId");
+				}
+			}
+		}
+
+		private string dateSent;
+		public string DateSent
+		{
+			get
+			{
+				return dateSent;
+			}
+			set
+			{
+				if (this.dateSent != value)
+				{
+					this.dateSent = value;
+					this.RaisePropertyChanged("DateSent");
+				}
+			}
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		private void RaisePropertyChanged(string propertyName)
 		{
@@ -138,10 +141,10 @@ namespace eCampus.Core.Models
 		}
 	}
 
-    public class UserDialog : INotifyPropertyChanged
+	public class UserDialog : INotifyPropertyChanged
 	{
-		private int statusCode;
-		public int StatusCode
+		private string statusCode;
+		public string StatusCode
 		{
 			get
 			{
@@ -156,6 +159,7 @@ namespace eCampus.Core.Models
 				}
 			}
 		}
+
 		private ObservableCollection<Message> data;
 		public ObservableCollection<Message> Data
 		{
@@ -163,14 +167,12 @@ namespace eCampus.Core.Models
 			{
 				try
 				{
-				return Sort(data);
-
+					return Sort(data);
 				}
 				catch (Exception)
 				{
-				return data;
-					
-			}
+					return data;
+				}
 			}
 			set
 			{
@@ -192,7 +194,7 @@ namespace eCampus.Core.Models
 				{
 					//DateTime.ParseExact((string)value, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
 					//if (oc[j].DateSent > oc[j + 1])
-					if (DateTime.ParseExact((string)oc[j].DateSent, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) > DateTime.ParseExact((string)oc[j + 1].DateSent, "MM/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture))
+					if (DateTime.ParseExact((string)oc[j].DateSent, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) > DateTime.ParseExact((string)oc[j + 1].DateSent, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture))
 					{
 						temp = oc[j];
 						oc[j] = oc[j + 1];
