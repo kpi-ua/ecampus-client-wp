@@ -3,6 +3,7 @@ using eCampus.Core.Models;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace eCampus.Core.Helpers
 {
@@ -55,6 +56,13 @@ namespace eCampus.Core.Helpers
 			var result = IsolatedStorageHelpers.OpenFromStore<Result>(ResultStoreName);
 			var json = await WebHelpers.DownloadString(new Uri(Client.BuildUrl("bulletinboard", "GetActual") + "?sessionId=" + result.Data));
 			return JsonConvert.DeserializeObject<Board>(json);
+		}
+
+		async public static Task<Users> GetAllUser(string name)
+		{
+			var result = IsolatedStorageHelpers.OpenFromStore<Result>(ResultStoreName);
+			var json = await WebHelpers.DownloadString(new Uri(Client.BuildUrl("user", "GetAllUsers") + "?sessionId=" + result.Data + "&name=" + name));
+			return JsonConvert.DeserializeObject<Users>(json);
 		}
 	}
 }

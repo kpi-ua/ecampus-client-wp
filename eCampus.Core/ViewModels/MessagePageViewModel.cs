@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using Telerik.Windows.Controls;
+using System;
 
 namespace eCampus.Core.ViewModels
 {
@@ -168,7 +170,16 @@ namespace eCampus.Core.ViewModels
 					item.Type = Telerik.Windows.Controls.ConversationViewMessageType.Incoming;
 				}
 			}
+			this.RaisePropertyChanged("Conversations");
+			this.RaisePropertyChanged("Data");
+			
+		}
 
+		public void AddMessageToDialog(Message message)
+		{
+			this.Data.Add(message);
+			this.RaisePropertyChanged("Conversations");
+			this.RaisePropertyChanged("Data");
 		}
 	}
 }

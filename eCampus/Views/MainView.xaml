@@ -1,387 +1,557 @@
-﻿<phone:PhoneApplicationPage
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
-    xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.SampleDataSource"
-    xmlns:conv="clr-namespace:eCampus.Core.Converters;assembly=eCampus.Core"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:abu="clr-namespace:AppBarUtils;assembly=AppBarUtils"
-    x:Class="eCampus.Views.MainView"
-    SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
+﻿<phone:PhoneApplicationPage x:Class="eCampus.Views.MainView"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.SampleDataSource"
+                            xmlns:abu="clr-namespace:AppBarUtils;assembly=AppBarUtils"
+                            xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+                            xmlns:conv="clr-namespace:eCampus.Core.Converters;assembly=eCampus.Core"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            Loaded="PhoneApplicationPage_Loaded"
+                            Orientation="Portrait"
+                            SupportedOrientations="Portrait"
+                            shell:SystemTray.IsVisible="True"
+                            mc:Ignorable="d">
 
-    <phone:PhoneApplicationPage.Resources>
-        <conv:BoolToStudentStatus x:Key="BoolToStudentStatus"></conv:BoolToStudentStatus>
-        <conv:VisibilityOccupationConverter x:Key="VisibilityOccupationConverter"></conv:VisibilityOccupationConverter>
-        <conv:ConversationPhotoWidthConverter x:Key="ConversationPhotoWidthConverter"></conv:ConversationPhotoWidthConverter>
-        <conv:BoolToStringConverter x:Key="BoolToStringConverter"></conv:BoolToStringConverter>
-        <conv:UserListToConversationTitleConverter x:Key="UserListToConversationTitleConverter"></conv:UserListToConversationTitleConverter>
-    </phone:PhoneApplicationPage.Resources>
-    <phone:PhoneApplicationPage.FontFamily>
-        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-    </phone:PhoneApplicationPage.FontFamily>
-    <phone:PhoneApplicationPage.FontSize>
-        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
-    </phone:PhoneApplicationPage.FontSize>
-    <phone:PhoneApplicationPage.Foreground>
-        <StaticResource ResourceKey="PhoneForegroundBrush"/>
-    </phone:PhoneApplicationPage.Foreground>
-    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid>
-            <Image Height="40" HorizontalAlignment="Left" Margin="24,0,0,0" Source="/Assets/Images/logowhite.png"/>
-        </Grid>
-        <phone:Pivot Margin="0,0,0,0" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
-            <i:Interaction.Triggers>
-                <abu:SelectedPivotItemChangedTrigger>
-                    <abu:SelectedPivotItemChangedTrigger.SelectionMappings>
-                        <!--Map 1st and 2nd pivot item to 1st app bar-->
-                        <abu:SelectionMapping SourceIndex="0" TargetIndex="0"/>
-                        <abu:SelectionMapping SourceIndex="1" TargetIndex="1"/>
-                        <abu:SelectionMapping SourceIndex="2" TargetIndex="2"/>
-                        <abu:SelectionMapping SourceIndex="3" TargetIndex="0"/>
-                    </abu:SelectedPivotItemChangedTrigger.SelectionMappings>
-                    <abu:SwitchAppBarAction>
-                        <abu:AppBar Id="0" Mode="Minimized">
-                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png" Text="оновити" Command="{Binding SampleCommand}"/>
-                        </abu:AppBar>
-                        <abu:AppBar Id="1" Mode="Minimized">
-                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png" Text="оновити" Command="{Binding SampleCommand}"/>
-                            <abu:AppBarButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="нове повідомлення" Command="{Binding SampleCommand}"/>
-                        </abu:AppBar>
-                        <abu:AppBar Id="2" Mode="Minimized">
-                            <abu:AppBarButton IconUri="/Assets/AppBar/refresh.png" Text="оновити" Command="{Binding SampleCommand}"/>
-                            <abu:AppBarButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="нове оголошення" Command="{Binding SampleCommand}"/>
-                        </abu:AppBar>
-                    </abu:SwitchAppBarAction>
-                </abu:SelectedPivotItemChangedTrigger>
-            </i:Interaction.Triggers>
-            <phone:PivotItem x:Name="myProfilePivotItem">
-                <phone:PivotItem.Header>
-                    <TextBlock FontSize="65">
-                        мій профіль
-                    </TextBlock>
-                </phone:PivotItem.Header>
-                <ScrollViewer Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Margin="12,0,-12,0" x:Name="profilePanel" Visibility="Collapsed">
-                        <Image MaxWidth="150" HorizontalAlignment="Left" Source="{Binding Image}"/>
-                        <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding FullName}"/>
-                        <StackPanel x:Name="job" Margin="0,36,0,0" Visibility="{Binding EmployeesPlaceCount, Converter={StaticResource VisibilityOccupationConverter}}">
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}"  Margin="0">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                                </TextBlock.Foreground>
-							<Run Text="Місце роботи:"/>
-                            </TextBlock>
-                            <Grid toolkit:TiltEffect.IsTiltEnabled="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Fill="{StaticResource PhoneAccentBrush}"></Rectangle>
-                                <ListBox Grid.Column="1" HorizontalContentAlignment="Stretch" Margin="24 0 0 0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding Employees}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Підрозділ:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding SubdivisionName}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="1" >
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Посада:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding Position}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="2" >
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Наукова ступінь:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding AcademicDegree}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="3">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Вчене звання:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding AcademicStatus}"/>
-                                                </Grid>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
+	<phone:PhoneApplicationPage.Resources>
+		<conv:BoolToStudentStatus x:Key="BoolToStudentStatus" />
+		<conv:VisibilityOccupationConverter x:Key="VisibilityOccupationConverter" />
+		<conv:ConversationPhotoWidthConverter x:Key="ConversationPhotoWidthConverter" />
+		<conv:BoolToStringConverter x:Key="BoolToStringConverter" />
+		<conv:UserListToConversationTitleConverter x:Key="UserListToConversationTitleConverter" />
+	</phone:PhoneApplicationPage.Resources>
+	<phone:PhoneApplicationPage.FontFamily>
+		<StaticResource ResourceKey="PhoneFontFamilyNormal" />
+	</phone:PhoneApplicationPage.FontFamily>
+	<phone:PhoneApplicationPage.FontSize>
+		<StaticResource ResourceKey="PhoneFontSizeNormal" />
+	</phone:PhoneApplicationPage.FontSize>
+	<phone:PhoneApplicationPage.Foreground>
+		<StaticResource ResourceKey="PhoneForegroundBrush" />
+	</phone:PhoneApplicationPage.Foreground>
+	<!--  LayoutRoot представляет корневую сетку, где размещается все содержимое страницы  -->
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid>
+			<Image Height="40"
+			       Margin="24,0,0,0"
+			       HorizontalAlignment="Left"
+			       Source="/Assets/Images/logowhite.png" />
+		</Grid>
+		<phone:Pivot Grid.Row="1"
+		             Margin="0,0,0,0"
+		             SelectionChanged="Pivot_SelectionChanged">
+			<i:Interaction.Triggers>
+				<abu:SelectedPivotItemChangedTrigger>
+					<abu:SelectedPivotItemChangedTrigger.SelectionMappings>
+						<!--  Map 1st and 2nd pivot item to 1st app bar  -->
+						<abu:SelectionMapping SourceIndex="0" TargetIndex="0" />
+						<abu:SelectionMapping SourceIndex="1" TargetIndex="1" />
+						<abu:SelectionMapping SourceIndex="2" TargetIndex="2" />
+						<abu:SelectionMapping SourceIndex="3" TargetIndex="0" />
+					</abu:SelectedPivotItemChangedTrigger.SelectionMappings>
+					<abu:SwitchAppBarAction>
 
-                            </Grid>
-                        </StackPanel>
-                        <StackPanel x:Name="education" Margin="0,24,0,0" Visibility="{Binding PersonalitiesPlaceCount, Converter={StaticResource VisibilityOccupationConverter}}">
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}"  Margin="0,0,0,0">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                                </TextBlock.Foreground>
-							<Run Text="Місце навчання:"/>
-                            </TextBlock>
-                            <Grid toolkit:TiltEffect.IsTiltEnabled="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Fill="{StaticResource PhoneAccentBrush}"></Rectangle>
-                                <ListBox Grid.Column="1" Margin="24 0 0 0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding Personalities}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Підрозділ:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding SubdivisionName}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="1">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Група:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding StudyGroupName}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="2">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Спеціальність:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding Specialty}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="3">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Статус:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding IsContract, Converter={StaticResource BoolToStudentStatus}}"/>
-                                                </Grid>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Grid>
-                        </StackPanel>
-                        <StackPanel x:Name="responsibility" Margin="0,24,0,0" >
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}"  Margin="0 0,0,12">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                                </TextBlock.Foreground>
-							<Run Text="Права доступу:"/>
-                            </TextBlock>
-                            <Grid toolkit:TiltEffect.IsTiltEnabled="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Fill="{StaticResource PhoneAccentBrush}"></Rectangle>
-                                <ListBox Grid.Column="1" Margin="24 0 0 0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding Profiles}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Система:  "/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding SubsystemName}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="1">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="24,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Створення даних:"/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding IsCreate, Converter={StaticResource BoolToStringConverter}}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="2">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="24,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Перегляд даних:"/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding IsRead, Converter={StaticResource BoolToStringConverter}}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="3">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="24,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Редаг. даних:"/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding IsUpdate, Converter={StaticResource BoolToStringConverter}}"/>
-                                                </Grid>
-                                                <Grid Grid.Row="4">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="24,6" Style="{StaticResource PhoneTextTitle3Style}">
-												    <Run Text="Видалення даних:"/>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="0,6" Style="{StaticResource PhoneTextTitle3Style}" Text="{Binding IsDelete, Converter={StaticResource BoolToStringConverter}}"/>
-                                                </Grid>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Grid>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
-            </phone:PivotItem>
-            <phone:PivotItem x:Name="messagePivotItem">
-                <phone:PivotItem.Header>
-                    <TextBlock FontSize="65">
-                            повідомлення
-                    </TextBlock>
-                </phone:PivotItem.Header>
-                <phone:PivotItem.Content>
-                    <Grid>
-                        <ListBox x:Name="messageList" Margin="12,0" ItemsSource="{Binding Conversations}" SelectionChanged="ListBox_SelectionChanged">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="0,6" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Background="Gray" Opacity="0.5" Width="110" Height="110">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=1}"/>
-                                                    <ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=2}"/>
-                                                    <ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=3}"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Image Grid.Column="0" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[1].Photo}"></Image>
-                                                <Image Grid.Column="1" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[2].Photo}"></Image>
-                                                <Image Grid.Column="2" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  Source="{Binding Users[3].Photo}"></Image>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid Grid.Column="1" Margin="6,0,0,0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"></RowDefinition>
-                                                <RowDefinition Height="*"></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" Text="{Binding Users, Converter={StaticResource UserListToConversationTitleConverter}}" FontFamily="Segoe WP Light" FontSize="38"></TextBlock>
-                                            <TextBlock Grid.Row="1" Text="{Binding LastMessageText}"></TextBlock>
-                                        </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
-                </phone:PivotItem.Content>
-            </phone:PivotItem>
-            <phone:PivotItem x:Name="bulletinBoardTab">
-                <phone:PivotItem.Header>
-                    <TextBlock FontSize="65">
-                        оголошення
-                    </TextBlock>
-                </phone:PivotItem.Header>
-                <phone:PivotItem.Content>
-                    <Grid>
-                        <ListBox Margin="12,0" ItemsSource="{Binding Bulletins}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="0,6">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Margin="0,3" Grid.Row="0" FontFamily="Segoe WP Light" FontSize="38" Text="{Binding Subject}"></TextBlock>
-                                        <TextBlock Grid.Row="1" Text="{Binding Text}"></TextBlock>
-                                        <TextBlock Grid.Row="2" HorizontalAlignment="Right" Text="{Binding DateCreate}"></TextBlock>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
-                </phone:PivotItem.Content>
-            </phone:PivotItem>
-            <phone:PivotItem>
-                <phone:PivotItem.Header>
-                    <TextBlock FontSize="65">
-                        статистика
-                    </TextBlock>
-                </phone:PivotItem.Header>
-                <phone:PivotItem.Content>
-                    <Grid>
-                        <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" Opacity="0.1" Click="Logout_click">logout</Button>
-                    </Grid>
-                </phone:PivotItem.Content>
-            </phone:PivotItem>
+						<abu:AppBar Id="0" Mode="Minimized">
+							<abu:AppBarButton Command="{Binding SampleCommand}"
+							                  IconUri="/Assets/AppBar/refresh.png"
+							                  Text="оновити" />
+						</abu:AppBar>
+						<abu:AppBar Id="1" Mode="Minimized">
+							<abu:AppBarButton Command="{Binding SampleCommand}"
+							                  IconUri="/Assets/AppBar/refresh.png"
+							                  Text="оновити" />
+							<abu:AppBarButton Command="{Binding CreateGroupCommand}"
+							                  IconUri="/Toolkit.Content/ApplicationBar.Add.png"
+							                  Text="створити групу" />
+						</abu:AppBar>
+						<abu:AppBar Id="2" Mode="Minimized">
+							<abu:AppBarButton Command="{Binding SampleCommand}"
+							                  IconUri="/Assets/AppBar/refresh.png"
+							                  Text="оновити" />
+							<abu:AppBarButton Command="{Binding SampleCommand}"
+							                  IconUri="/Toolkit.Content/ApplicationBar.Add.png"
+							                  Text="нове оголошення" />
+						</abu:AppBar>
+					</abu:SwitchAppBarAction>
+				</abu:SelectedPivotItemChangedTrigger>
+			</i:Interaction.Triggers>
+			<phone:PivotItem x:Name="myProfilePivotItem">
+				<phone:PivotItem.Header>
+					<TextBlock FontSize="65">мій профіль</TextBlock>
+				</phone:PivotItem.Header>
+				<ScrollViewer Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+					<StackPanel x:Name="profilePanel"
+					            Margin="12,0,-12,0"
+					            Visibility="Collapsed">
+						<Image MaxWidth="150"
+						       HorizontalAlignment="Left"
+						       Source="{Binding Image}" />
+						<TextBlock Margin="0,0,0,0"
+						           Style="{StaticResource PhoneTextTitle2Style}"
+						           Text="{Binding FullName}"
+						           TextWrapping="Wrap" />
+						<StackPanel x:Name="job"
+						            Margin="0,36,0,0"
+						            Visibility="{Binding EmployeesPlaceCount,
+						                                 Converter={StaticResource VisibilityOccupationConverter}}">
+							<TextBlock Margin="0" Style="{StaticResource PhoneTextLargeStyle}">
+								<TextBlock.Foreground>
+									<SolidColorBrush Color="{StaticResource PhoneAccentColor}" />
+								</TextBlock.Foreground>
+								<Run Text="Місце роботи:" />
+							</TextBlock>
+							<Grid toolkit:TiltEffect.IsTiltEnabled="True">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="5" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Rectangle Grid.Column="0" Fill="{StaticResource PhoneAccentBrush}" />
+								<ListBox Grid.Column="1"
+								         Margin="24 0 0 0"
+								         HorizontalContentAlignment="Stretch"
+								         ItemsSource="{Binding Employees}"
+								         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+								         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+									<ListBox.ItemTemplate>
+										<DataTemplate ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+											<Grid>
+												<Grid.RowDefinitions>
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+												</Grid.RowDefinitions>
+												<Grid Grid.Row="0">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Підрозділ:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding SubdivisionName}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="1">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Посада:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding Position}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="2">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Наукова ступінь:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding AcademicDegree}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="3">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Вчене звання:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding AcademicStatus}"
+													           TextWrapping="Wrap" />
+												</Grid>
+											</Grid>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
 
-        </phone:Pivot>
-    </Grid>
+							</Grid>
+						</StackPanel>
+						<StackPanel x:Name="education"
+						            Margin="0,24,0,0"
+						            Visibility="{Binding PersonalitiesPlaceCount,
+						                                 Converter={StaticResource VisibilityOccupationConverter}}">
+							<TextBlock Margin="0,0,0,0" Style="{StaticResource PhoneTextLargeStyle}">
+								<TextBlock.Foreground>
+									<SolidColorBrush Color="{StaticResource PhoneAccentColor}" />
+								</TextBlock.Foreground>
+								<Run Text="Місце навчання:" />
+							</TextBlock>
+							<Grid toolkit:TiltEffect.IsTiltEnabled="True">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="5" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Rectangle Grid.Column="0" Fill="{StaticResource PhoneAccentBrush}" />
+								<ListBox Grid.Column="1"
+								         Margin="24 0 0 0"
+								         ItemsSource="{Binding Personalities}"
+								         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+									<ListBox.ItemTemplate>
+										<DataTemplate ScrollViewer.VerticalScrollBarVisibility="Disabled">
+											<Grid>
+												<Grid.RowDefinitions>
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+												</Grid.RowDefinitions>
+												<Grid Grid.Row="0">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Підрозділ:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding SubdivisionName}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="1">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Група:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding StudyGroupName}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="2">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Спеціальність:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding Specialty}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="3">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Статус:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding IsContract,
+													                          Converter={StaticResource BoolToStudentStatus}}"
+													           TextWrapping="Wrap" />
+												</Grid>
+											</Grid>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+							</Grid>
+						</StackPanel>
+						<StackPanel x:Name="responsibility" Margin="0,24,0,0">
+							<TextBlock Margin="0 0,0,12" Style="{StaticResource PhoneTextLargeStyle}">
+								<TextBlock.Foreground>
+									<SolidColorBrush Color="{StaticResource PhoneAccentColor}" />
+								</TextBlock.Foreground>
+								<Run Text="Права доступу:" />
+							</TextBlock>
+							<Grid toolkit:TiltEffect.IsTiltEnabled="True">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="5" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Rectangle Grid.Column="0" Fill="{StaticResource PhoneAccentBrush}" />
+								<ListBox Grid.Column="1"
+								         Margin="24 0 0 0"
+								         ItemsSource="{Binding Profiles}"
+								         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+									<ListBox.ItemTemplate>
+										<DataTemplate ScrollViewer.VerticalScrollBarVisibility="Disabled">
+											<Grid>
+												<Grid.RowDefinitions>
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="Auto" />
+												</Grid.RowDefinitions>
+												<Grid Grid.Row="0">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Система:  " />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding SubsystemName}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="1">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="24,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Створення даних:" />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           HorizontalAlignment="Right"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding IsCreate,
+													                          Converter={StaticResource BoolToStringConverter}}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="2">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="24,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Перегляд даних:" />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           HorizontalAlignment="Right"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding IsRead,
+													                          Converter={StaticResource BoolToStringConverter}}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="3">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="24,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Редаг. даних:" />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           HorizontalAlignment="Right"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding IsUpdate,
+													                          Converter={StaticResource BoolToStringConverter}}"
+													           TextWrapping="Wrap" />
+												</Grid>
+												<Grid Grid.Row="4">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="Auto" />
+														<ColumnDefinition Width="*" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Grid.Column="0"
+													           Margin="24,6"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           TextWrapping="Wrap">
+														<Run Text="Видалення даних:" />
+													</TextBlock>
+													<TextBlock Grid.Column="1"
+													           Margin="0,6"
+													           HorizontalAlignment="Right"
+													           Style="{StaticResource PhoneTextTitle3Style}"
+													           Text="{Binding IsDelete,
+													                          Converter={StaticResource BoolToStringConverter}}"
+													           TextWrapping="Wrap" />
+												</Grid>
+											</Grid>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+							</Grid>
+						</StackPanel>
+					</StackPanel>
+				</ScrollViewer>
+			</phone:PivotItem>
+			<phone:PivotItem x:Name="messagePivotItem">
+				<phone:PivotItem.Header>
+					<TextBlock FontSize="65">повідомлення</TextBlock>
+				</phone:PivotItem.Header>
+				<phone:PivotItem.Content>
+					<Grid>
+						<ListBox x:Name="messageList"
+						         Margin="12,0"
+						         ItemsSource="{Binding Conversations}"
+						         SelectionChanged="ListBox_SelectionChanged">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<Grid Margin="0,6">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Grid Grid.Column="0"
+										      Width="110"
+										      Height="110"
+										      Background="Gray"
+										      Opacity="0.5">
+											<Grid>
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=1}" />
+													<ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=2}" />
+													<ColumnDefinition Width="{Binding Users, Converter={StaticResource ConversationPhotoWidthConverter}, ConverterParameter=3}" />
+												</Grid.ColumnDefinitions>
+												<Image Grid.Column="0"
+												       HorizontalAlignment="Center"
+												       VerticalAlignment="Center"
+												       Source="{Binding Users[1].Photo}"
+												       Stretch="UniformToFill" />
+												<Image Grid.Column="1"
+												       HorizontalAlignment="Center"
+												       VerticalAlignment="Center"
+												       Source="{Binding Users[2].Photo}"
+												       Stretch="UniformToFill" />
+												<Image Grid.Column="2"
+												       HorizontalAlignment="Center"
+												       VerticalAlignment="Center"
+												       Source="{Binding Users[3].Photo}"
+												       Stretch="UniformToFill" />
+											</Grid>
+										</Grid>
+										<Grid Grid.Column="1" Margin="6,0,0,0">
+											<Grid.RowDefinitions>
+												<RowDefinition Height="*" />
+												<RowDefinition Height="*" />
+											</Grid.RowDefinitions>
+											<TextBlock Grid.Row="0"
+											           FontFamily="Segoe WP Light"
+											           FontSize="38"
+											           Text="{Binding Users,
+											                          Converter={StaticResource UserListToConversationTitleConverter}}" />
+											<TextBlock Grid.Row="1" Text="{Binding LastMessageText}" />
+										</Grid>
+									</Grid>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</Grid>
+				</phone:PivotItem.Content>
+			</phone:PivotItem>
+			<phone:PivotItem x:Name="bulletinBoardTab">
+				<phone:PivotItem.Header>
+					<TextBlock FontSize="65">оголошення</TextBlock>
+				</phone:PivotItem.Header>
+				<phone:PivotItem.Content>
+					<Grid>
+						<ListBox x:Name="bulletinList"
+						         Margin="12,0"
+						         ItemsSource="{Binding Bulletins}"
+						         SelectionChanged="ListBox_SelectionChanged_1">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<Grid Margin="0,6">
+										<Grid.RowDefinitions>
+											<RowDefinition Height="*" />
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="Auto" />
+										</Grid.RowDefinitions>
+										<TextBlock Grid.Row="0"
+										           Margin="0,3"
+										           FontFamily="Segoe WP Light"
+										           FontSize="38"
+										           Text="{Binding Subject}" />
+										<TextBlock Grid.Row="1" Text="{Binding Text}" />
+										<TextBlock Grid.Row="2"
+										           HorizontalAlignment="Right"
+										           Text="{Binding DateCreate}" />
+									</Grid>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</Grid>
+				</phone:PivotItem.Content>
+			</phone:PivotItem>
+			<phone:PivotItem>
+				<phone:PivotItem.Header>
+					<TextBlock FontSize="65">статистика</TextBlock>
+				</phone:PivotItem.Header>
+				<phone:PivotItem.Content>
+					<Grid>
+						<Button HorizontalAlignment="Stretch"
+						        VerticalAlignment="Top"
+						        Click="Logout_click"
+						        Opacity="0.1">
+							logout
+						</Button>
+					</Grid>
+				</phone:PivotItem.Content>
+			</phone:PivotItem>
+
+		</phone:Pivot>
+	</Grid>
 
 </phone:PhoneApplicationPage>

@@ -5,45 +5,52 @@ using System.Windows.Controls;
 using eCampus.Core.Models;
 using System.Collections.Generic;
 using System;
+using eCampus.Core.ViewModels;
 
 namespace eCampus.Views
 {
-    public partial class MainView : PhoneApplicationPage
-    {
-        private readonly ProgressIndicator _progressIndicator;
+	public partial class MainView : PhoneApplicationPage
+	{
+		private readonly ProgressIndicator _progressIndicator;
 
-        public MainView()
-        {
-            InitializeComponent();
-            _progressIndicator = new ProgressIndicator() { IsVisible = false, IsIndeterminate = true, Text = "" };
-			App.MyProfileVM.MyProfileDownloadStarted += () => 
-			{ 
-                _progressIndicator.Text = "Завантаження профілю...";
-                _progressIndicator.IsVisible = true;
+		public MainView()
+		{
+			InitializeComponent();
+			_progressIndicator = new ProgressIndicator() { IsVisible = false, IsIndeterminate = true, Text = "" };
+			App.MyProfileVM.MyProfileDownloadStarted += () =>
+			{
+				_progressIndicator.Text = "Завантаження профілю...";
+				_progressIndicator.IsVisible = true;
 			};
-			App.MyProfileVM.MyProfileDownloadCompleted += async () => 
+			App.MyProfileVM.MyProfileDownloadCompleted += async () =>
 			{
 				_progressIndicator.IsVisible = false;
 				var x = await App.MyProfileVM.DeviceRegistration(App.CurrentChannel.ChannelUri.ToString());
 			};
 			App.MessageVM.MyConversationsDownloadStarted += () =>
 			{
-                _progressIndicator.Text = "Завантаження листувань...";
-                _progressIndicator.IsVisible = true;
+				_progressIndicator.Text = "Завантаження листувань...";
+				_progressIndicator.IsVisible = true;
 			};
 			App.MessageVM.MyConversationsDownloadCompleted += () =>
 			{
-                _progressIndicator.IsVisible = false;
+				_progressIndicator.IsVisible = false;
 			};
-            SystemTray.SetProgressIndicator(this, _progressIndicator);
-        }
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
+			App.MainVM.CreateGroupEvent += () =>
+				{
+					NavigationService.Navigate(new Uri("/Views/CreateGroupView.xaml", UriKind.Relative));
+				};
+			SystemTray.SetProgressIndicator(this, _progressIndicator);
+		}
+
+		private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			this.DataContext = App.MainVM;
 			myProfilePivotItem.DataContext = App.MyProfileVM;
 			App.MyProfileVM.Load();
-            profilePanel.Visibility = System.Windows.Visibility.Visible;
-        }
+			profilePanel.Visibility = System.Windows.Visibility.Visible;
+		}
 
 		private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -88,5 +95,14 @@ namespace eCampus.Views
 			var x = await m.InvokeApiAsync<object>("logout", System.Net.Http.HttpMethod.Post, d);
 		}
 
-    }
+		private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+		{
+			var bul = ((Bulletin)(((ListBox)sender).SelectedItem));
+			bulletinList.SelectionChanged -= ListBox_SelectionChanged_1;
+			bulletinList.SelectedIndex = -1;
+			bulletinList.SelectionChanged += ListBox_SelectionChanged_1;
+			NavigationService.Navigate(new System.Uri("/Views/BulletinView.xaml?text=" + bul.Text + "&subject=" + bul.Subject + "&creator=" + bul.CreatorUserFullName + "&date=" + bul.DateCreate, System.UriKind.Relative));
+		}
+
+	}
 }

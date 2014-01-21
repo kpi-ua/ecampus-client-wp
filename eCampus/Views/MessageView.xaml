@@ -5,6 +5,7 @@
                             xmlns:conv="clr-namespace:eCampus.Core.Converters;assembly=eCampus.Core"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:help="clr-namespace:eCampus.Core.Helpers;assembly=eCampus.Core"
+                            xmlns:local="clr-namespace:eCampus.Views"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:primitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls.Primitives"
@@ -62,6 +63,99 @@
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<Grid Grid.Row="0">
+				<Grid.Resources>
+					<local:CustomTemplateSelector x:Key="CustomTemplateSelector">
+						<local:CustomTemplateSelector.OutgoingTemplate>
+							<DataTemplate>
+								<Grid Margin="12">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="3*" />
+									</Grid.ColumnDefinitions>
+									<primitives:RadPointerContentControl Grid.Column="1"
+									                                     Background="{StaticResource PhoneAccentBrush}"
+									                                     TargetPoint="160, 300">
+										<primitives:RadPointerContentControl.PointerTemplate>
+											<DataTemplate>
+												<Polygon Width="12"
+												         Height="24"
+												         Fill="{StaticResource PhoneAccentBrush}"
+												         Points="0,0 12,0 12,12 0,24"
+												         RenderTransformOrigin="0.5, 0.5"
+												         StrokeThickness="0">
+													<Polygon.RenderTransform>
+														<CompositeTransform ScaleX="-1" TranslateX="-10"/>
+													</Polygon.RenderTransform>
+												</Polygon>
+											</DataTemplate>
+										</primitives:RadPointerContentControl.PointerTemplate>
+
+										<StackPanel>
+											<TextBlock Margin="12"
+											           Text="{Binding Path=Text}"
+											           TextWrapping="Wrap" />
+											<TextBlock Margin="12, 0, 12, 12"
+											           HorizontalAlignment="Right"
+											           Text="{Binding Path=DateSent}" />
+										</StackPanel>
+									</primitives:RadPointerContentControl>
+								</Grid>
+							</DataTemplate>
+						</local:CustomTemplateSelector.OutgoingTemplate>
+
+						<local:CustomTemplateSelector.IncomingTemplate>
+							<DataTemplate>
+								<Grid Margin="12,12,0,12">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="3*" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+
+									<primitives:RadPointerContentControl Background="{StaticResource PhoneAccentBrush}" TargetPoint="-150,-300">
+										<primitives:RadPointerContentControl.PointerTemplate>
+											<DataTemplate>
+												<Polygon Width="12"
+												         Height="24"
+												         Fill="{StaticResource PhoneAccentBrush}"
+												         Points="0,0 12,0 12,12 0,24"
+												         RenderTransformOrigin="0.5, 0.5"
+												         StrokeThickness="0">
+													<Polygon.RenderTransform>
+														<ScaleTransform ScaleX="-1" />
+													</Polygon.RenderTransform>
+												</Polygon>
+											</DataTemplate>
+										</primitives:RadPointerContentControl.PointerTemplate>
+
+										<StackPanel>
+											<TextBlock Margin="12"
+											           Text="{Binding Path=Text}"
+											           TextWrapping="Wrap" />
+											<TextBlock Margin="12, 0, 0, 12"
+											           HorizontalAlignment="Right"
+											           Text="{Binding Path=DateSent}" />
+										</StackPanel>
+									</primitives:RadPointerContentControl>
+								</Grid>
+							</DataTemplate>
+						</local:CustomTemplateSelector.IncomingTemplate>
+
+						<local:CustomTemplateSelector.SystemTemplate>
+							<DataTemplate>
+								<Grid Margin="12" Background="Orange">
+									<StackPanel>
+										<TextBlock Margin="12"
+										           Text="{Binding Path=Text}"
+										           TextWrapping="Wrap" />
+										<TextBlock Margin="12, 0, 12, 12"
+										           HorizontalAlignment="Right"
+										           Text="{Binding Path=DateSent}" />
+									</StackPanel>
+								</Grid>
+							</DataTemplate>
+						</local:CustomTemplateSelector.SystemTemplate>
+					</local:CustomTemplateSelector>
+				</Grid.Resources>
 				<!--
 					<help:MessageListBox ItemsSource="{Binding Data}" HorizontalAlignment="Stretch" Margin="12,0,12,0" Name="listBox1" >
 					<help:MessageListBox.ItemContainerStyle>
@@ -89,6 +183,7 @@
 				<telerikData:RadConversationView x:Name="radConvView"
 				                                 IsPullToRefreshEnabled="True"
 				                                 ItemsSource="{Binding Data}"
+				                                 MessageTemplateSelector="{StaticResource CustomTemplateSelector}"
 				                                 RefreshRequested="radConvView_RefreshRequested"
 				                                 SendingMessage="radConvView_SendingMessage"
 				                                 UseOptimizedManipulationRouting="False">
@@ -313,7 +408,7 @@
 							</Setter>
 						</Style>
 					</telerikData:RadConversationView.PullToRefreshIndicatorStyle>
-					<telerikData:RadConversationView.IncomingMessageTemplate>
+					<!--<telerikData:RadConversationView.IncomingMessageTemplate>
 						<DataTemplate>
 							<c4f:ChatBubble Width="330"
 							                HorizontalAlignment="Left"
@@ -328,7 +423,7 @@
 							                ChatBubbleDirection="LowerRight"
 							                Content="{Binding Path=Text}" />
 						</DataTemplate>
-					</telerikData:RadConversationView.OutgoingMessageTemplate>
+					</telerikData:RadConversationView.OutgoingMessageTemplate>-->
 				</telerikData:RadConversationView>
 			</Grid>
 			<!--

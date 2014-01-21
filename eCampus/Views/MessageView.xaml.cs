@@ -12,6 +12,7 @@ using System.Globalization;
 using Telerik.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace eCampus.Views
 {
@@ -129,9 +130,49 @@ namespace eCampus.Views
 
 		}
 
-		private void radConvView_SendingMessage(object sender, ConversationViewMessageEventArgs e)
+		async private void radConvView_SendingMessage(object sender, ConversationViewMessageEventArgs e)
 		{
+			_mvm.AddMessageToDialog(new Message() { DateSent = DateTime.Now.ToString("G", new CultureInfo("en-US")), SenderUserAccountId = CampusClient.UserID, MassageGroupId = NavigationContext.QueryString["groupid"], Text = (e.Message as ConversationViewMessage).Text, Type = ConversationViewMessageType.Outgoing });
+			await CampusClient.SendMessage(NavigationContext.QueryString["groupid"], (e.Message as ConversationViewMessage).Text);
+		}
 
+
+	}
+
+	public class CustomTemplateSelector : DataTemplateSelector
+	{
+		public DataTemplate IncomingTemplate
+		{
+			get;
+			set;
+		}
+
+		public DataTemplate OutgoingTemplate
+		{
+			get;
+			set;
+		}
+
+		public DataTemplate SystemTemplate
+		{
+			get;
+			set;
+		}
+
+		public override DataTemplate SelectTemplate(object item, DependencyObject container)
+		{
+			Message message = (Message)item;
+
+			switch (message.Type)
+			{
+				case ConversationViewMessageType.Incoming:
+					return this.IncomingTemplate;
+				case ConversationViewMessageType.Outgoing:
+					return this.OutgoingTemplate;
+				default:
+					break;
+			}
+			return null;
 		}
 	}
 }

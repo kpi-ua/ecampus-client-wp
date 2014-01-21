@@ -29,11 +29,27 @@ namespace eCampus
         private static LoginViewModel loginViewModel = null;
 		private static MyProfileViewModel myProfileViewModel = null;
 		private static MessageViewModel messageViewModel = null;
-
+		private static MainViewModel mainViewModel = null;
         private static LoginViewModel _loginViewModel = null;
 		private static MyProfileViewModel _myProfileViewModel = null;
 		private static MessageViewModel _messageViewModel = null;
         private static List<MessagePageViewModel> _messagePageViewModel = null;
+
+	
+
+		public static MainViewModel MainVM
+		{
+			get
+            {
+				if (mainViewModel == null)
+                {
+					mainViewModel = new MainViewModel();
+                }
+
+				return mainViewModel;
+            }
+		}
+
 
         public static LoginViewModel LoginVM
         {

@@ -45,6 +45,23 @@ namespace eCampus.Core.Models
 				}
 			}
 		}
+
+		private string massageGroupId;
+		public string MassageGroupId
+		{
+			get
+			{
+				return massageGroupId;
+			}
+			set
+			{
+				if (this.massageGroupId != value)
+				{
+					this.massageGroupId = value;
+					this.RaisePropertyChanged("MassageGroupId");
+				}
+			}
+		}
 		private string senderUserAccountId;
 		public string SenderUserAccountId
 		{

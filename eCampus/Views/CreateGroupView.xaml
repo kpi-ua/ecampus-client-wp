@@ -1,0 +1,57 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="eCampus.Views.CreateGroupView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel содержит имя приложения и заголовок страницы-->
+        
+
+        <!--ContentPanel – поместите здесь дополнительное содержимое-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<telerikPrimitives:RadTextBox x:Name="searchbox" VerticalAlignment="Top" ActionButtonTap="RadTextBox_ActionButtonTap" ActionButtonVisibility="Visible">
+				<telerikPrimitives:RadTextBox.ActionButtonStyle>
+					<Style TargetType="telerikPrimitives:RadImageButton">
+						<Setter Property="ButtonShape" Value="Ellipse"/>
+					</Style>
+				</telerikPrimitives:RadTextBox.ActionButtonStyle>
+			</telerikPrimitives:RadTextBox>
+			<ListBox Margin="12,0,0,0" x:Name="peopleBox" Grid.Row="1">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid Margin="0,6,0,6">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"></ColumnDefinition>
+								<ColumnDefinition Width="5*"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Image Width="50" Height="50" Source="{Binding Photo}"></Image>
+							<TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="{Binding FullName}" Grid.Column="1"></TextBlock>
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
