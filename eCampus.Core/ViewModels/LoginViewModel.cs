@@ -7,116 +7,125 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Collections.Generic;
+using Campus.SDK;
 
 namespace eCampus.Core.ViewModels
 {
-    public delegate void AuthenticationEventHandler();
+	public delegate void AuthenticationEventHandler();
 
-    public class LoginViewModel : INotifyPropertyChanged
-    {
-        public event AuthenticationEventHandler AuthenticationCompleted;
+	public class LoginViewModel : INotifyPropertyChanged
+	{
+		public event AuthenticationEventHandler AuthenticationCompleted;
 
-        public event AuthenticationEventHandler AuthenticationStarted;
+		public event AuthenticationEventHandler AuthenticationStarted;
 
-        public event AuthenticationEventHandler AuthenticationFailed;
+		public event AuthenticationEventHandler AuthenticationFailed;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        /// Поле команды для обработки события нажатия клавиши "Увiйти"
-        /// </summary>
-        private ICommand _loginCommand;
+		/// <summary>
+		/// Поле команды для обработки события нажатия клавиши "Увiйти"
+		/// </summary>
+		private ICommand _loginCommand;
 
-        private BitmapImage _logoSource;
+		private BitmapImage _logoSource;
 
-        public string Login { get; set; }
-        public string Password { get; set; }
+		public string Login { get; set; }
+		public string Password { get; set; }
 
 
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        public LoginViewModel()
-        {
-            this._loginCommand = new DelegateCommand(this.LoginAction);
-        }
+		/// <summary>
+		/// Конструктор
+		/// </summary>
+		public LoginViewModel()
+		{
+			this._loginCommand = new DelegateCommand(this.LoginAction);
+		}
 
-        /// <summary>
-        /// Свойство для доступа к команде для обработки события нажатия клавиши "Увiйти"
-        /// </summary>
-        public ICommand LoginCommand
-        {
-            get { return this._loginCommand; }
-        }
+		/// <summary>
+		/// Свойство для доступа к команде для обработки события нажатия клавиши "Увiйти"
+		/// </summary>
+		public ICommand LoginCommand
+		{
+			get { return this._loginCommand; }
+		}
 
-        /// <summary>
-        /// Действие при нажатии клавиши "Увiйти"
-        /// </summary>
-        /// <param name="obj"></param>
-        async private void LoginAction(object obj)
-        {
-            try
-            {
-                if (AuthenticationStarted != null)
-                {
-                    AuthenticationStarted();
-                }
+		/// <summary>
+		/// Действие при нажатии клавиши "Увiйти"
+		/// </summary>
+		/// <param name="obj"></param>
+		async public void LoginAction(object obj)
+		{
+			try
+			{
+				if (AuthenticationStarted != null)
+				{
+					AuthenticationStarted();
+				}
 
-                var ar = await CampusClient.Auth(this.Login, this.Password);
+				var result = IsolatedStorageHelpers.OpenFromStore<Result>("Result");
 
-                if (AuthenticationCompleted != null)
-                {
-                    AuthenticationCompleted();
-                }
-            }
-            catch (WebException)
-            {
-                if (NetworkInterface.GetIsNetworkAvailable())
-                {
-                    MessageBox.Show("Невірний логін чи пароль");
-                }
-                else
-                {
-                    MessageBox.Show("Відсутній доступ до мережі Інтернет");
-                }
+				var ar = await CampusClient.Auth(this.Login, this.Password);
 
-                if (AuthenticationFailed != null)
-                {
-                    AuthenticationFailed();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        
-        /// <summary>
-        /// Получение логотипа в зависимости от темы
-        /// </summary>
-        public BitmapImage LogoSource
-        {
-            get
-            {
-                Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
-                
-                if (darkBackgroundVisibility == Visibility.Visible)
-                    _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\logowhite.png", UriKind.Relative) };
-                else
-                    _logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\logoblack.png", UriKind.Relative) };
-                return _logoSource;
-            }
-        }
+				if (IsolatedStorageHelpers.OpenBooleanFromStore("cheked"))
+				{
+					IsolatedStorageHelpers.SaveToStore<string>(this.Login, "login");
+					IsolatedStorageHelpers.SaveToStore<string>(this.Password, "password");
+				}
 
-		
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
+				if (AuthenticationCompleted != null)
+				{
+					AuthenticationCompleted();
+				}
+			}
+			catch (WebException)
+			{
+				if (NetworkInterface.GetIsNetworkAvailable())
+				{
+					MessageBox.Show("Невірний логін чи пароль");
+				}
+				else
+				{
+					MessageBox.Show("Відсутній доступ до мережі Інтернет");
+				}
 
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
+				if (AuthenticationFailed != null)
+				{
+					AuthenticationFailed();
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// Получение логотипа в зависимости от темы
+		/// </summary>
+		public BitmapImage LogoSource
+		{
+			get
+			{
+				Visibility darkBackgroundVisibility = (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
+
+				if (darkBackgroundVisibility == Visibility.Visible)
+					_logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\logowhite.png", UriKind.Relative) };
+				else
+					_logoSource = new BitmapImage() { UriSource = new Uri(@"\Assets\Images\logoblack.png", UriKind.Relative) };
+				return _logoSource;
+			}
+		}
+
+
+		private void RaisePropertyChanged(string propertyName)
+		{
+			PropertyChangedEventHandler handler = this.PropertyChanged;
+
+			if (handler != null)
+			{
+				handler(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
 }

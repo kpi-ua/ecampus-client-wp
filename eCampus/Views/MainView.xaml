@@ -552,7 +552,7 @@
 						<Button HorizontalAlignment="Stretch"
 						        VerticalAlignment="Top"
 						        Click="Logout_click"
-						        Opacity="0.1">
+						        Opacity="1">
 							logout
 						</Button>
 					</Grid>

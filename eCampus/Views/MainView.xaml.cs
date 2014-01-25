@@ -6,6 +6,7 @@ using eCampus.Core.Models;
 using System.Collections.Generic;
 using System;
 using eCampus.Core.ViewModels;
+using eCampus.Core.Helpers;
 
 namespace eCampus.Views
 {
@@ -104,6 +105,12 @@ namespace eCampus.Views
 			d.Add("userid", App.MyProfileVM.UserId.ToString());
 			d.Add("channel", App.CurrentChannel.ChannelUri.ToString());
 			var x = await m.InvokeApiAsync<object>("logout", System.Net.Http.HttpMethod.Post, d);
+
+			IsolatedStorageHelpers.SaveToStore<bool>(false, "cheked");
+			var a = IsolatedStorageHelpers.OpenBooleanFromStore("cheked");
+			IsolatedStorageHelpers.SaveToStore<string>("", "login");
+			IsolatedStorageHelpers.SaveToStore<string>("", "password");
+			NavigationService.Navigate(new Uri("/Views/LoginView.xaml?islogout=true", UriKind.Relative));
 		}
 
 		private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
