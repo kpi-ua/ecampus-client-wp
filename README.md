@@ -1,4 +1,4 @@
-####Windows Phone Campus Client
+### KPI Campus Windows Phone Application
 
  * Profile
  * Chat
